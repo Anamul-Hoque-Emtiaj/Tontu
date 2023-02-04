@@ -53,12 +53,12 @@ def product_detail(request,slug,id):
 	product=Product.objects.get(id=id)
 	related_products=Product.objects.filter(category=product.category).exclude(id=id)[:4]
 	colors=ProductAttribute.objects.filter(product=product).values('color__id','color__title','color__color_code').distinct()
-	sizes=ProductAttribute.objects.filter(product=product).values('size__id','size__title','price','color__id').distinct()
 	reviewForm=ReviewAdd()
 
+	print(id,slug)
 	# Check
 	canAdd=True
-	reviewCheck=ProductReview.objects.filter(user=request.user,product=product).count()
+	reviewCheck=ProductReview.objects.filter(product=product).count()
 	if request.user.is_authenticated:
 		if reviewCheck > 0:
 			canAdd=False
@@ -72,7 +72,7 @@ def product_detail(request,slug,id):
 	avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
 	# End
 
-	return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'sizes':sizes,'reviewForm':reviewForm,'canAdd':canAdd,'reviews':reviews,'avg_reviews':avg_reviews})
+	return render(request, 'product_detail.html',{'data':product,'related':related_products,'colors':colors,'reviewForm':reviewForm,'canAdd':canAdd,'reviews':reviews,'avg_reviews':avg_reviews})
 
 # Search
 def search(request):
@@ -84,8 +84,6 @@ def search(request):
 def filter_data(request):
 	colors=request.GET.getlist('color[]')
 	categories=request.GET.getlist('category[]')
-	brands=request.GET.getlist('brand[]')
-	sizes=request.GET.getlist('size[]')
 	minPrice=request.GET['minPrice']
 	maxPrice=request.GET['maxPrice']
 	allProducts=Product.objects.all().order_by('-id').distinct()
@@ -95,10 +93,7 @@ def filter_data(request):
 		allProducts=allProducts.filter(productattribute__color__id__in=colors).distinct()
 	if len(categories)>0:
 		allProducts=allProducts.filter(category__id__in=categories).distinct()
-	if len(brands)>0:
-		allProducts=allProducts.filter(brand__id__in=brands).distinct()
-	if len(sizes)>0:
-		allProducts=allProducts.filter(productattribute__size__id__in=sizes).distinct()
+	
 	t=render_to_string('ajax/product-list.html',{'data':allProducts})
 	return JsonResponse({'data':t})
 
@@ -112,7 +107,10 @@ def load_more_data(request):
 )
 
 # Add to cart
+@login_required
 def add_to_cart(request):
+	if not request.user.is_authenticated:
+		return redirect('/accounts/login/')
 	# del request.session['cartdata']
 	cart_p={}
 	cart_p[str(request.GET['id'])]={
@@ -136,6 +134,7 @@ def add_to_cart(request):
 	return JsonResponse({'data':request.session['cartdata'],'totalitems':len(request.session['cartdata'])})
 
 # Cart List Page
+@login_required
 def cart_list(request):
 	total_amt=0
 	if 'cartdata' in request.session:
@@ -147,6 +146,7 @@ def cart_list(request):
 
 
 # Delete Cart Item
+@login_required
 def delete_cart_item(request):
 	p_id=str(request.GET['id'])
 	if 'cartdata' in request.session:
@@ -161,6 +161,7 @@ def delete_cart_item(request):
 	return JsonResponse({'data':t,'totalitems':len(request.session['cartdata'])})
 
 # Delete Cart Item
+@login_required
 def update_cart_item(request):
 	p_id=str(request.GET['id'])
 	p_qty=request.GET['qty']
@@ -270,7 +271,7 @@ def save_review(request,pid):
 # User Dashboard
 import calendar
 def my_dashboard(request):
-	orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count')
+	orders=CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values('month').annotate(count=Count('id')).values('month','count').filter(user=request.user)
 	monthNumber=[]
 	totalOrders=[]
 	for d in orders:
@@ -290,6 +291,7 @@ def my_order_items(request,id):
 	return render(request, 'user/order-items.html',{'orderitems':orderitems})
 
 # Wishlist
+@login_required
 def add_wishlist(request):
 	pid=request.GET['product']
 	product=Product.objects.get(pk=pid)
@@ -310,6 +312,7 @@ def add_wishlist(request):
 	return JsonResponse(data)
 
 # My Wishlist
+
 def my_wishlist(request):
 	wlist=Wishlist.objects.filter(user=request.user).order_by('-id')
 	return render(request, 'user/wishlist.html',{'wlist':wlist})
@@ -372,3 +375,6 @@ def update_address(request,id):
 			msg='Data has been saved'
 	form=AddressBookForm(instance=address)
 	return render(request, 'user/update-address.html',{'form':form,'msg':msg})
+
+def password(request):
+	return redirect('/accounts/password_change/')

@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import Banner,Category,Color,Size,Product,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook
+from .models import Banner,Category,Color,Product,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook
 
 # admin.site.register(Banner)
-admin.site.register(Size)
 
 
 class BannerAdmin(admin.ModelAdmin):
@@ -24,7 +23,7 @@ admin.site.register(Product,ProductAdmin)
 
 # Product Attribute
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display=('id','image_tag','product','price','color','size')
+    list_display=('id','image_tag','product','price','color')
 admin.site.register(ProductAttribute,ProductAttributeAdmin)
 
 # Order

@@ -39,6 +39,7 @@ urlpatterns=[
     path('activate-address',views.activate_address, name='activate-address'),
     path('update-address/<int:id>',views.update_address, name='update-address'),
     path('edit-profile',views.edit_profile, name='edit-profile'),
+    path('password/',views.password, name='password'),
 ]
 
 if settings.DEBUG:

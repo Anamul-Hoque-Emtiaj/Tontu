@@ -45,14 +45,14 @@ class Color(models.Model):
         return self.title
 
 # Size
-class Size(models.Model):
-    title=models.CharField(max_length=100)
+# class Size(models.Model):
+#     title=models.CharField(max_length=100)
 
-    class Meta:
-        verbose_name_plural='5. Sizes'
+#     class Meta:
+#         verbose_name_plural='5. Sizes'
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
 
 # Product Model
@@ -75,7 +75,7 @@ class Product(models.Model):
 class ProductAttribute(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
-    size=models.ForeignKey(Size,on_delete=models.CASCADE)
+    # size=models.ForeignKey(Size,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
     image=models.ImageField(upload_to="product_imgs/",null=True)
 
@@ -134,11 +134,11 @@ class ProductReview(models.Model):
     review_text=models.TextField()
     review_rating=models.CharField(choices=RATING,max_length=150)
 
-    class Meta:
-        verbose_name_plural='Reviews'
 
     def get_review_rating(self):
         return self.review_rating
+    class Meta:
+        verbose_name_plural='10. ProductReview'
 
 # WishList
 class Wishlist(models.Model):
@@ -146,7 +146,7 @@ class Wishlist(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='Wishlist'
+        verbose_name_plural='11. Wishlist'
 
 # AddressBook
 class UserAddressBook(models.Model):
@@ -156,6 +156,6 @@ class UserAddressBook(models.Model):
     status=models.BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural='AddressBook'
+        verbose_name_plural='12. AddressBook'
 
     

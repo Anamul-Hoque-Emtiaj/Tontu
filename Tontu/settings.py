@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Main.apps.MainConfig',
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Main.apps.MainConfig'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +140,5 @@ LOGOUT_REDIRECT_URL='login'
 JET_SIDE_MENU_COMPACT = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

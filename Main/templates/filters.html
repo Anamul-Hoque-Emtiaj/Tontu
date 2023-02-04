@@ -39,27 +39,3 @@
 					{% endfor %}
 				</div>
 			</div>
-			<!-- Filter 3 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Brands</h6>
-				<div class="list-group list-group-flush">
-					{% for brand in brands %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="brand" value="{{brand.brand__id}}" type="checkbox" />&nbsp;
-						{{brand.brand__title}}
-					</li>
-					{% endfor %}
-				</div>
-			</div>
-			<!-- Filter 3 -->
-			<div class="card mb-4">
-				<h6 class="card-header">Sizes</h6>
-				<div class="list-group list-group-flush">
-					{% for size in sizes %}
-					<li class="list-group-item">
-						<input class="filter-checkbox" data-filter="size" value="{{size.size__id}}" type="checkbox" />&nbsp;
-						{{size.size__title}}
-					</li>
-					{% endfor %}
-				</div>
-			</div>

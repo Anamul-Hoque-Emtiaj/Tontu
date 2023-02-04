@@ -14,6 +14,14 @@
 			<hr/>
 			<table class="table table-bordered">
 				<tr>
+					<th>Status</th>
+					{% if data.status %}
+					<th> <span >In Stock</span></th>
+					{% else %}
+					<th> <span >Out of Stock</span></th>
+					{% endif %}
+				</tr>
+				<tr>
 					<th>Colors</th>
 					<td>
 						{% for color in colors %}
@@ -22,16 +30,8 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Sizes</th>
-					<td>
-						{% for size in sizes %}
-						<button data-price="{{size.price}}" class="btn btn-outline-secondary btn-sm choose-size color{{size.color__id}}">{{size.size__title}}</button>
-						{% endfor %}
-					</td>
-				</tr>
-				<tr>
 					<th>Price</th>
-					<th>$ <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
+					<th>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
 				</tr>
 			</table>
 			<hr/>
@@ -39,9 +39,13 @@
 			  <input type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
 			  <div class="input-group-append">
 			  	<input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
-		          <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
-		          <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+		        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+		        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+				{% if user.is_authenticated %}
 			    <button class="btn btn-primary btn-sm add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+				{% else %}
+				<a href="/accounts/login"><button class="btn btn-primary px-1 add-to-cart" ><i class="fa fa-shopping-cart"></i> Add to Cart</button></a>
+				{% endif %}
 			  </div>
 			</div>
 		</div>
@@ -52,10 +56,6 @@
 			<h3 class="my-3">Detail</h3>
 			<!-- Detail -->
 			<table class="table table-bordered">
-				<tr>
-					<th>Brand</th>
-					<td><a href="/brand-product-list/{{data.brand.id}}">{{data.brand.title}}</a></td>
-				</tr>
 				<tr>
 					<th>Category</th>
 					<td><a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a></td>
@@ -75,38 +75,37 @@
 				{% endif %}
 				{% endif %}
 			</h3>
-	{% if user.is_authenticated %}
-	<!-- Product Review -->
-	<div class="modal fade" id="productReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Add Product Review</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	      	<form method="post" id="addForm" action="{% url 'save-review' data.id %}">
-	      		{% csrf_token %}
-		      	<table class="table table-bordered">
-		      		{{reviewForm.as_table}}
-		      		<tr>
-		      			<td colspan="2">
-		      				<button type="submit" class="btn btn-primary">Submit</button>
-		      				<input type="reset" class="btn btn-dark" value="Reset" id="reset" />
-		      			</td>
-		      		</tr>
-		      	</table>
-		      	<p class="ajaxRes"></p>
-	      </form>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Product Review End -->
-	{% endif %}
-			</h3>
+			{% if user.is_authenticated %}
+			<!-- Product Review -->
+			<div class="modal fade" id="productReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Add Product Review</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="post" id="addForm" action="{% url 'save-review' data.id %}">
+						{% csrf_token %}
+						<table class="table table-bordered">
+							{{reviewForm.as_table}}
+							<tr>
+								<td colspan="2">
+									<button type="submit" class="btn btn-primary">Submit</button>
+									<input type="reset" class="btn btn-dark" value="Reset" id="reset" />
+								</td>
+							</tr>
+						</table>
+						<p class="ajaxRes"></p>
+				</form>
+				</div>
+				</div>
+			</div>
+			</div>
+			<!-- Product Review End -->
+			{% endif %}
 			<div class="card">
 				<div class="card-body review-list" style="max-height: 400px; overflow: auto;">
 					<!-- Detail -->
@@ -144,10 +143,10 @@
 			  <div class="card-footer">
 			  	<button class="btn btn-sm btn-primary"><i class="fa fa-shopping-cart"></i></button>
 			  	<button class="btn btn-sm btn-danger"><i class="fa fa-heart"></i></button>
-			  	<span class="float-right">
+			  	<!--span class="float-right">
 			  		4.5/5
 			  		<i class="fa fa-star text-warning"></i>
-			  	</span>
+			  	</span-->
 			  </div>
 			</div>
 		</div>

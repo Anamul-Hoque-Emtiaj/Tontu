@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ecommerce Bootstrap Template</title>
+	<title>তন্তু</title> 
 	<!-- Font Awesome -->
 	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free/css/all.min.css' %}" />
 	<!-- Bootstrap 4 CSS -->
@@ -16,9 +16,9 @@
 	<script type="text/javascript" src="{% static 'custom.js' %}"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-		  <a class="navbar-brand" href="/">Bottle Shop</a>
+		  <a class="navbar-brand" href="/">তন্তু </a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -27,7 +27,7 @@
 		      <div class="input-group">
 				  <input name="q" type="text" class="form-control" placeholder="search" />
 				  <div class="input-group-append">
-				    <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+				    <button class="btn btn-secondary" type="submit" id="button-addon2">Search</button>
 				  </div>
 				</div>
 		    </form>
@@ -38,10 +38,11 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-white" href="{% url 'category-list' %}">Categories</a>
 		      </li>
-		   
+			  {% if user.is_authenticated %}
 		      <li class="nav-item">
 		        <a class="nav-link text-white" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart (<span class="cart-list">{{request.session.cartdata|length}}</span>)</a>
 		      </li>
+			  {% endif %}
 		      <li class="nav-item dropdown">
 		        <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		          <i class="fa fa-user"></i> My Account
@@ -64,42 +65,49 @@
     {% block content %}
     {% endblock %}
 
-<footer class="pt-4 my-md-5 pt-md-5 border-top container">
-    <div class="row">
+<footer class="pt-4 mt-md-5 pt-md-5 border-top bg-dark">
+  <div class="container">
+	<div class="row">
         <div class="col-12 col-md">
-        <a href="#">Bottle Shop</a>
-        <small class="d-block mb-3 text-muted">&copy; 2017-2020</small>
-        </div>
-        <div class="col-6 col-md">
-        <h5>Features</h5>
+        <h4 class="text-white">Policy</h4>
         <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Cool stuff</a></li>
-            <li><a class="text-muted" href="#">Random feature</a></li>
-            <li><a class="text-muted" href="#">Team feature</a></li>
-            <li><a class="text-muted" href="#">Stuff for developers</a></li>
-            <li><a class="text-muted" href="#">Another one</a></li>
-            <li><a class="text-muted" href="#">Last time</a></li>
+            <li><a class="text-light" href="#">Terms & Conditions</a></li>
+            <li><a class="text-light" href="#">Privacy Policy</a></li>
+            <li><a class="text-white" href="#">Return & Exchange Policy</a></li>
         </ul>
         </div>
-        <div class="col-6 col-md">
-        <h5>Resources</h5>
+        <div class="col-12 col-md">
+        <h4 class="text-white">Contact us</h4>
         <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Resource</a></li>
-            <li><a class="text-muted" href="#">Resource name</a></li>
-            <li><a class="text-muted" href="#">Another resource</a></li>
-            <li><a class="text-muted" href="#">Final resource</a></li>
+			<li><a class="text-white" href="#">Team Tontu</a></li>
+            <li><a class="text-white" href="mailto:tontubd@gmail.com"><i class="fa fa-envelope" aria-hidden="true">  tontubd@gmail.com</i></a></li>
+            <li><a class="text-white" href="tel:+8801621840366"><i class="fa fa-phone" aria-hidden="true">  +8801621840366</i></a></li>
         </ul>
         </div>
-        <div class="col-6 col-md">
-        <h5>About</h5>
+        <div class="col-12 col-md">
+        <h4 class="text-white">About</h4>
         <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Team</a></li>
-            <li><a class="text-muted" href="#">Locations</a></li>
-            <li><a class="text-muted" href="#">Privacy</a></li>
-            <li><a class="text-muted" href="#">Terms</a></li>
+            <li><a class="text-white" href="#">Tontu</a></li>
+            <li><a class="text-white" href="#">Order & Delivery Process</a></li>
+            <li><a class="text-white" href="#">FAQ</a></li>
         </ul>
         </div>
+		<div class="col-12 col-md">
+			<h4 class="text-white">Follow Us On</h4>
+			<ul class="list-unstyled text-small">
+				<li><a class="text-white" href="https://www.facebook.com/profile.php?id=100089815365578">Facebook</a></li>
+				<li><a class="text-white" href="https://www.facebook.com/profile.php?id=100089815365578">Instagram</a></li>
+				<li><a class="text-white" href="https://www.facebook.com/profile.php?id=100089815365578">Linkedin</a></li>
+			</ul>
+			</div>
     </div>
-    </footer>
+	<hr class="my-2 bg-white"/>
+	<div class="row ">
+		<div class=" col-12 col-md">
+			<p class="d-block mb-3 text-white">&copy; 2023 তন্তু</p>
+		</div>
+	</div>
+  </div> 
+</footer>
 </body>
 </html>
