@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="container my-4">
+    <h2 class="my-5 border-bottom pb-3 text-center">About Tontu</h2>
+	<div class="row ">
+        <div class="col-12 col-md-6">
+            <img src="{% static 'image/ffw.jpeg' %}" class="d-block w-100">
+        </div>
+        <div class="col-12 col-md-6">
+            <p class="lead p-md-3" >Tontu is a sustainable fashion business in Dhaka, Bangladesh, providing ethically sourced and eco-friendly clothing. We strive to create a positive impact on the environment, while at the same time providing stylish and quality garments that are both fashionable and affordable. 
+                Our products are made with recycled polybags, reducing waste and promoting a circular economy. By using traditional weaving techniques passed down from generations, we work with local weavers to bring their skills to the forefront and provide them with a stable income. 
+                Our goal is to support these artisans and their communities while promoting a healthier environment </p>
+        </div>
+	</div>
+    <h4 class="my-5 border-bottom pb-3 text-center">Garbage Collection</h4>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <p class="lead p-md-5">We offer weekly pickups, ensuring that your property stays clean and tidy. Our team of professionals is dedicated to providing you with prompt and efficient service. With our service, you will have peace of mind knowing that your garbage is being handled in an environmentally-friendly manner. We recycle as much as possible and dispose the rest in a proper way, so you can feel good about your contribution to the environment. </p>
+        </div>
+        <div class="col-12 col-md-6">
+            <img src="{% static 'image/poly.jpeg' %}" class="d-block w-100">
+        </div>
+    </div>
+    <h4 class="my-5 border-bottom pb-3 text-center">Recycled Textiles</h4>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img src="{% static 'image/weiveing.jpeg' %}" class="d-block w-100">
+        </div>
+        <div class="col-12 col-md-6">
+            <p class="lead p-md-5">We provide sustainable fashion solutions that create minimal environmental impact, while delivering high quality, stylish and ethically-sourced apparel. We work with responsible manufacturers and prioritize natural fibers, organic fabrics, and recyclable materials to reduce waste and carbon emissions. Our goal is to create fashionable, sustainable clothing that looks great, and does good for the planet. </p>
+        </div>
+    </div>
+    <h4 class="my-5 border-bottom pb-3 text-center">Customized Handmade Products </h4>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <p class="lead p-md-5">Introducing our one-of-a-kind, customized handmade product, made with recyclable polybags. Not only is this product beautifully crafted by hand, it is also eco-friendly and helps reduce waste. Each piece is unique and customizable to fit your individual style. And the best part? You can feel good about your purchase knowing that you're supporting sustainable living. Order now and add a touch of beauty and a sense of responsibility to your everyday life. </p>
+        </div>
+        <div class="col-12 col-md-6">
+            <img src="{% static 'image/tontu2.jpg' %}" class="d-block w-100">
+        </div>
+    </div>
+</main>
+{% endblock %}

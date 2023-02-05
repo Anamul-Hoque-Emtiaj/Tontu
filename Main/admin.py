@@ -29,7 +29,7 @@ admin.site.register(ProductAttribute,ProductAttributeAdmin)
 # Order
 class CartOrderAdmin(admin.ModelAdmin):
 	list_editable=('paid_status','order_status')
-	list_display=('user','total_amt','paid_status','order_dt','order_status')
+	list_display=('user','total_amt','paid_status','order_dt','order_status','billing_address')
 admin.site.register(CartOrder,CartOrderAdmin)
 
 class CartOrderItemsAdmin(admin.ModelAdmin):
@@ -46,5 +46,5 @@ admin.site.register(Wishlist)
 
 
 class UserAddressBookAdmin(admin.ModelAdmin):
-	list_display=('user','address','status')
+	list_display=('user','mobile','street_address','city')
 admin.site.register(UserAddressBook,UserAddressBookAdmin)

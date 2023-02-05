@@ -88,6 +88,18 @@ class ProductAttribute(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 
+# AddressBook
+class UserAddressBook(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    mobile=models.CharField(max_length=50,null=True)
+    country=models.CharField(max_length=50,null=True)
+    city = models.CharField(max_length=75, null=True)
+    street_address  = models.CharField(max_length=75, null=True)
+    zipcode = models.CharField(max_length=10, null=True)
+
+    class Meta:
+        verbose_name_plural='12. AddressBook'
+
 # Order
 status_choice=(
         ('process','In Process'),
@@ -96,6 +108,7 @@ status_choice=(
     )
 class CartOrder(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
+    billing_address = models.ForeignKey(UserAddressBook, on_delete=models.SET_NULL,null=True)
     total_amt=models.FloatField()
     paid_status=models.BooleanField(default=False)
     order_dt=models.DateTimeField(auto_now_add=True)
@@ -148,14 +161,6 @@ class Wishlist(models.Model):
     class Meta:
         verbose_name_plural='11. Wishlist'
 
-# AddressBook
-class UserAddressBook(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    mobile=models.CharField(max_length=50,null=True)
-    address=models.TextField()
-    status=models.BooleanField(default=False)
 
-    class Meta:
-        verbose_name_plural='12. AddressBook'
 
     

@@ -16,6 +16,7 @@
 							<th>Title</th>
 							<th>Image</th>
 							<th>Price</th>
+							<th>Remove</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -26,6 +27,7 @@
 								<img width="100" src="/media/{{wl.product.productattribute_set.first.image}}" alt="{{wl.product.title}}">
 							</td>
 							<td>{{wl.product.productattribute_set.first.price}}</td>
+							<td><a href="{% url 'delete-from-wishlist' wl.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a></td>
 						</tr>
 						{% endfor %}
 					</tbody>

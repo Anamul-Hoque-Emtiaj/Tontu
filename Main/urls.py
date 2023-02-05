@@ -1,4 +1,4 @@
-from django.urls import path,include
+from django.urls import path
 from . import views
 
 from django.conf import settings
@@ -19,8 +19,6 @@ urlpatterns=[
     path('update-cart',views.update_cart_item,name='update-cart'),
     path('accounts/signup',views.signup,name='signup'),
     path('checkout',views.checkout,name='checkout'),
-    path('payment-done/', views.payment_done, name='payment_done'),
-    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
     path('save-review/<int:pid>',views.save_review, name='save-review'),
     # User Section Start
     path('my-dashboard',views.my_dashboard, name='my_dashboard'),
@@ -31,15 +29,12 @@ urlpatterns=[
     # Wishlist
     path('add-wishlist',views.add_wishlist, name='add_wishlist'),
     path('my-wishlist',views.my_wishlist, name='my_wishlist'),
+    path('delete-from-wishlist/<int:id>',views.delete_from_wishlist, name='delete-from-wishlist'),
     # My Reviews
     path('my-reviews',views.my_reviews, name='my-reviews'),
-    # My AddressBook
-    path('my-addressbook',views.my_addressbook, name='my-addressbook'),
-    path('add-address',views.save_address, name='add-address'),
-    path('activate-address',views.activate_address, name='activate-address'),
-    path('update-address/<int:id>',views.update_address, name='update-address'),
     path('edit-profile',views.edit_profile, name='edit-profile'),
     path('password/',views.password, name='password'),
+    path('about-us/',views.about_us, name='about-us'),
 ]
 
 if settings.DEBUG:
