@@ -2,20 +2,31 @@
 {% load static %}
 {% block content %}
 <main class="container my-4">
-	<!-- Featured Products -->
-	<h3 class="my-4 border-bottom pb-1">Login</h3>
-	<table class="table table-bordered">
-		<form method="post">
-			{% csrf_token %}
-			{{form.as_table}}
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="Login" class="btn btn-primary" />
-				</td>
-			</tr>
-		</form>
-	</table>
-	<p><a href="{% url 'password_reset' %}" class="text-danger">Reset Password?</a></p>
-	<p>If you are not registred, Please <a href="{% url 'signup' %}">Signup here</a>.</p>
+
+	<div style="padding-top: 100px;"></div>
+	<div class="col-md-5 shadow mx-auto p-0 m-5">
+		<div class="alert alert-success "> Log In Here</div>
+		<div class="p-4">
+			<form action="{% url 'login'%}" method="POST">
+				{% csrf_token %}
+				{% if error %}
+				<div style="padding-top: 5px;"></div>
+				<div class="alert alert-danger p-5" >{{error}}</div>
+				{% endif %}
+				<div class="form-group">
+					<label for="email">UserName</label>
+					<input type="email" class="form-control" name="username"  id="username"  placeholder="Enter UserName" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" minlength="8" required>
+				</div>
+				<p><a href="{% url 'password_reset' %}" class="text-danger">Reset Password?</a></p>
+				<p>If you are not registred, Please <a href="{% url 'signup' %}">Signup here</a>.</p -->
+				<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+		</div>
+	</div>
+	<div style="padding-top: 100px;"></div>
 </main>
 {% endblock %}

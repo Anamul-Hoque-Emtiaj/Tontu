@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse,HttpResponse
 from .models import Banner,Category,Product,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook
+from django.contrib.auth.models import User
 from django.db.models import Max,Min,Count,Avg
 from django.db.models.functions import ExtractMonth
 from django.template.loader import render_to_string
@@ -176,17 +177,54 @@ def update_cart_item(request):
 # Signup Form
 def signup(request):
 	if request.method=='POST':
-		form=SignupForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username=form.cleaned_data.get('username')
-			pwd=form.cleaned_data.get('password1')
-			user=authenticate(username=username,password=pwd)
-			login(request, user)
-			return redirect('home')
-	form=SignupForm
-	return render(request, 'registration/signup.html',{'form':form})
+		user = request.POST
+		if user['password1'] != user['password2']:
+			return render(request, 'registration/signup.html',{'error':'password didnot matched'})
+		if User.objects.filter(username = user['username']):
+			return render(request, 'registration/signup.html',{'error':'UserName already exist'})
+		if User.objects.filter(email = user['email']):
+			return render(request, 'registration/signup.html',{'error':'Email already exist'})
+		if User.objects.filter(email = len(user['password1'])<8):
+			return render(request, 'registration/signup.html',{'error':'Password length Must be greater than 8'})
+        	
+		user1 = User.objects.create_user(
+			first_name = user['first_name'],
+			last_name = user['last_name'],
+			email = user['email'],
+			username= user['username'],
+			password= user['password1']
+		)
+		user2=authenticate(username=user['username'],password=user['password1'])
+		login(request, user2)
+		return redirect('home')
+	return render(request, 'registration/signup.html')
+#login
+def login(request):
+	if request.method == 'POST':
+		if not User.objects.filter(username = request.POST['username']):
+			return render(request, 'registration/login.html',{'error':'Username not found'})
+		user = User.objects.filter(username = request.POST['username'])
+		if not user.check_password(request.POST['password']):
+			return render(request, 'registration/login.html',{'error':'Password did not match'})
+		user2=authenticate(username=request.POST['username'],password=request.POST['password'])
+		login(request, user2)
+		return redirect('home')
 
+	return render(request, 'registration/login.html')
+
+#password_change ///incomplete
+def password_change(request):
+	if request.method == 'POST':
+		if not User.objects.filter(username = request.POST['username']):
+			return render(request, 'registration/login.html',{'error':'Username not found'})
+		user = User.objects.filter(username = request.POST['username'])
+		if not user.check_password(request.POST['password']):
+			return render(request, 'registration/login.html',{'error':'Password did not match'})
+		user2=authenticate(username=request.POST['username'],password=request.POST['password'])
+		login(request, user2)
+		return redirect('home')
+
+	return render(request, 'registration/login.html')
 
 # Checkout
 @login_required

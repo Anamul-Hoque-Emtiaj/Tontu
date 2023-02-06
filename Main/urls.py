@@ -18,6 +18,7 @@ urlpatterns=[
     path('delete-from-cart',views.delete_cart_item,name='delete-from-cart'),
     path('update-cart',views.update_cart_item,name='update-cart'),
     path('accounts/signup',views.signup,name='signup'),
+    path('accounts/login',views.login,name='login'),
     path('checkout',views.checkout,name='checkout'),
     path('save-review/<int:pid>',views.save_review, name='save-review'),
     # User Section Start
@@ -35,6 +36,7 @@ urlpatterns=[
     path('edit-profile',views.edit_profile, name='edit-profile'),
     path('password/',views.password, name='password'),
     path('about-us/',views.about_us, name='about-us'),
+    path('accounts/password_change/',views.password_change,name='password_change'),
 ]
 
 if settings.DEBUG:

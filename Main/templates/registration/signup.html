@@ -2,19 +2,48 @@
 {% load static %}
 {% block content %}
 <main class="container my-4">
-	<!-- Featured Products -->
-	<h3 class="my-4 border-bottom pb-1">SignUp</h3>
-	<table class="table table-bordered">
-		<form method="post">
-			{% csrf_token %}
-			{{form.as_table}}
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="Register" class="btn btn-primary" />
-				</td>
-			</tr>
-		</form>
-	</table>
-	<p>If you are already registred, Please <a href="{% url 'login' %}">Login here</a>.</p>
+	
+	<div style="padding-top: 50px;"></div>
+	<div class="col-lg-5 shadow mx-auto p-0 m-5">
+		<div class="alert alert-success "> Create An Account</div>
+		<div class="p-4">
+			<form action="{% url 'signup'%}" method="POST">
+				{% csrf_token %}
+				{% if error %}
+				<div style="padding-top: 5px;"></div>
+				<div class="alert alert-danger p-3" >{{error}}</div>
+				{% endif %}
+				<div class="form-group">
+					<label for="name">First Name</label>
+					<input type="text" class="form-control" name="first_name" id="first_name"  placeholder="Enter First Name" required>
+				</div>
+				<div class="form-group">
+					<label for="name">Last Name</label>
+					<input type="text" class="form-control" name="last_name" id="last_name"  placeholder="Enter Last Name" required>
+					</div>
+				<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="email" class="form-control" name="email" id="email"  placeholder="Enter email" required>
+				</div>
+				<div class="form-group">
+				<label for="email">UserName</label>
+				<input type="text" class="form-control" name="username" id="username"  placeholder="Enter UserName" required>
+				</div>
+				<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password1" id="password1" placeholder="Password" minlength="8"  required>
+		
+				</div>
+				<div class="form-group ">
+				<label for="cpassword">Confirm Password</label>
+				<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password" minlength="8" required>
+				</div>
+				<p>If you are already registred, Please <a href="{% url 'login' %}">Login here</a>.</p>
+				<button type="submit" class="btn btn-primary">Sign Up</button>
+				</form>
+				
+		</div>
+	</div>
+	<div style="padding-top: 50px;"></div>
 </main>
 {% endblock %}

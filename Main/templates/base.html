@@ -38,11 +38,12 @@
 		      <li class="nav-item">
 		        <a class="nav-link text-white" href="{% url 'category-list' %}">Categories</a>
 		      </li>
-			  {% if user.is_authenticated %}
 		      <li class="nav-item">
 		        <a class="nav-link text-white" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart (<span class="cart-list">{{request.session.cartdata|length}}</span>)</a>
 		      </li>
-			  {% endif %}
+			  <li class="nav-item">
+		        <a class="nav-link text-white mx-1" href="{% url 'my_wishlist' %}"> <i class="fa fa-heart"></i></a>
+		      </li>
 		      <li class="nav-item dropdown">
 		        <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		          <i class="fa fa-user"></i> My Account
