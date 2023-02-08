@@ -4,19 +4,19 @@
 <main class="container my-4">
 	<!-- Featured Products -->
 	<h3 class="my-4 border-bottom pb-1">Categories</h3>
-	<div class="row">
-		{% if data %}
-			{% for cat in data %}
-			<div class="col-md-3 mb-4">
-				<div class="card shadow">
-				<a href="/category-product-list/{{cat.id}}"><img src="/media/{{cat.image}}" class="card-img-top" alt="{{cat.title}}" /></a>
-				<div class="card-body">
-					<h6 class="card-text text-center">{{cat.title}}</h6>
+	<div class="product-center container">
+		{% for cat in data %}
+			<div class="product-item">
+		  <div class="overlay">
+			<a href="/category-product-list/{{cat.id}}" class="product-thumb">
+					  <img src="/media/{{cat.image}}" class="card-img-top" alt="{{cat.title}}" />
+					</a>
 				</div>
-				</div>
+		  <div class="product-info">
+				<a href="/category-product-list/{{cat.id}}">{{cat.title}}</a>
 			</div>
-			{% endfor %}
-		{% endif %}
-	</div>
+		</div>
+		{% endfor %}
+		</div>
 </main>
 {% endblock %}

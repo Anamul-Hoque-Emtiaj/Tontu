@@ -1,42 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 <main class="container my-4">
 	<h3 class="my-4 border-bottom pb-1">Wishlist</h3>
 	{% if totalitems %}
-	<div class="row">
+	<div class="product-center container">
 		{% for wl in wlist %}
-		<div class="col-md-4 mb-4 product-box">
-			<div class="card shadow">
-			  <a href="/product/{{wl.product.slug}}/{{wl.product.id}}"><img src="/media/{{wl.product.productattribute_set.first.image}}" class="card-img-top" alt="{{wl.product.title}}"></a>
-			  <div class="card-body">
-				<h5 class="card-text text-center">{{wl.product.title}}</h5>
-				<h6 class="text-center">BDT <span class="product-price-{{wl.product.id}}">{{wl.product.productattribute_set.first.price}}</span></h6>
-			  </div>
-			  {% if user.is_authenticated %}
-			  <div class="card-footer">
+		<div class="product-item">
+			<div class="overlay">
+				<a href="/product/{{wl.product.slug}}/{{wl.product.id}}" class="product-thumb">
+				  <img src="/media/{{wl.product.productattribute_set.first.image}}" class="card-img-top" alt="{{wl.product.title}}" />
+				</a>
+				<span class="rating">-{{wl.product.discount}}%</span>
 				
+			  </div>
+			  <div class="product-info">
+				<span>{{wl.product.category}}</span>
+				<a href="/product/{{wl.product.slug}}/{{wl.product.id}}">{{wl.product.title}}</a>
+				<h4>BDT <span class="product-price-{{wl.product.id}}">{{wl.product.productattribute_set.first.price}}</span></h4>
+			  </div>
+			  <ul class="icons">
+				<li><a href="{% url 'delete-from-wishlist' wl.product.id %}" ><i class="fa fa-trash"></i></a></li>
+				<li><i class="fa fa-shopping-cart add-to-cart" data-index="{{wl.product.id}}"></i></li>
 				<input type="hidden" value="1" class="form-control product-qty-{{wl.product.id}}" id="productQty" />
 				<input type="hidden" class="product-image-{{wl.product.id}}" value="{{wl.product.productattribute_set.first.image}}" />
 				<input type="hidden" class="product-id-{{wl.product.id}}" value="{{wl.product.id}}" />
 				<input type="hidden" class="product-title-{{wl.product.id}}" value="{{wl.product.title}}" />
-
-				<div class="d-flex">
-					<div class="p-2">
-						<button class="btn btn-sm btn-primary add-to-cart" data-index="{{wl.product.id}}"><i class="fa fa-shopping-cart"></i></button>
-					</div>
-					<div class="p-2">
-						<a href="{% url 'delete-from-wishlist' wl.product.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-					</div>
-					
-					<div class="ml-auto p-2">
-						Rating {{wl.product.rating}}({{wl.product.review}})
-					</div>
-				  </div>
-				
-				</div>
-				{% endif %}
-			</div>
+			  </ul>
 		</div>
 		{% endfor %}
 	</div>

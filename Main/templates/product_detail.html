@@ -10,20 +10,20 @@
 		<div class="col-md-8">
 			<table class="table table-bordered">
 				<tr>
-					<th>Product Name</th>
-					<th>{{data.title}}</th>
+					<td>Product Name</td>
+					<td>{{data.title}}</td>
 				</tr>
 				<tr>
-					<th>Status</th>
+					<td>Status</td>
 					{% if data.status %}
-					<th> <span >In Stock</span></th>
+					<td> <span >In Stock</span></td>
 					{% else %}
-					<th> <span >Out of Stock</span></th>
+					<td> <span >Out of Stock</span></td>
 					{% endif %}
 				</tr>
 				<tr>
-					<th>Price</th>
-					<th>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
+					<td>Price</td>
+					<td>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></td>
 				</tr>
 			</table>
 			<hr/>
@@ -53,11 +53,11 @@
 			<h3 class="my-3">Detail</h3>
 			<table class="table table-bordered">
 				<tr>
-					<th>Category</th>
+					<td>Category</td>
 					<td><a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a></td>
 				</tr>
 				<tr>
-					<th>Colors</th>
+					<td>Colors</td>
 					<td>
 						{% for color in colors %}
 							<button class="btn btn-lg choose-color" data-color="{{color.color__id}}" style="background-color: {{color.color__color_code}}"></button>
@@ -65,7 +65,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Specification</th>
+					<td>Specification</td>
 					<td>{{data.specs}}</td>
 				</tr>
 			</table>
@@ -137,26 +137,32 @@
 	</div>
 	<!-- Related Products -->
 	<h3 class="mt-4 mb-3 border-bottom pb-1">Related Products</h3>
-	<div class="row">
-		{% for product in related %}
-		<div class="col-lg-3 col-sm-4 mb-4">
-			<div class="card shadow">
-			  <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}"></a>
-			  <div class="card-body">
-			    <h6 class="card-text"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></h6>
-			  </div>
-			  <div class="card-footer">
-			  	<button class="btn btn-sm btn-primary"><i class="fa fa-shopping-cart"></i></button>
-			  	<button class="btn btn-sm btn-danger"><i class="fa fa-heart"></i></button>
-			  	<!--span class="float-right">
-			  		4.5/5
-			  		<i class="fa fa-star text-warning"></i>
-			  	</span-->
-			  </div>
-			</div>
+	{% for product in related %}
+	<div class="product-item">
+	<div class="overlay">
+	<a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
+				<img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" />
+			</a>
+			<span class="rating">-{{product.discount}}%</span>
 		</div>
-		{% endfor %}
-	</div>
+	<div class="product-info">
+			<span>{{product.category}}</span>
+			<a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
+			<h4>BDT <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h4>
+		</div>
+		<ul class="icons">
+		<input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+		<input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+		<input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+		<input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+		{% if user.is_authenticated %}
+		<li><i class="fa fa-heart add-wishlist" data-product="{{product.id}}"></i></li>
+		<li><i class="fa fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i></li>
+		{% endif %}
+		
+		</ul>
+</div>
+{% endfor %}
 </main>
 <!-- Image Zoom -->
 <script src="{% static 'jquery.ez-plus.js' %}"></script>

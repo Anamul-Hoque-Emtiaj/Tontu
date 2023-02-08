@@ -66,6 +66,7 @@ class Product(models.Model):
     is_featured=models.BooleanField(default=True)
     rating = models.DecimalField(null=True,max_digits=5, decimal_places=2)
     review = models.IntegerField(default=0)
+    discount = models.DecimalField(default=20,max_digits=5, decimal_places=2)
 
     class Meta:
         verbose_name_plural='6. Products'

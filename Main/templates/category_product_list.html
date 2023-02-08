@@ -12,52 +12,34 @@
 			<h3 class="mb-4 border-bottom pb-1">
 				Categories/{{category.title}}
 			</h3>
-			<div class="row" id="filteredProducts">
+			<div class="product-center container" id="filteredProducts">
 				{% for product in data %}
-				<div class="col-md-4 mb-4 product-box">
-					<div class="card shadow">
-					  <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}"></a>
-					  <div class="card-body">
-					    <h5 class="card-text text-center">{{product.title}}</h5>
-						{% if user.is_anonymous %}
-						<div class="d-flex">
-						  <div class="p-2">
-							BDT {{product.productattribute_set.first.price}}
-						  </div>
-						  <div class="ml-auto p-2">
-							Rating: {{product.rating}}({{product.review}})
-						  </div>
-						  </div>
-						{% else %}
-						<h6 class="text-center">BDT <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h6>
-						{% endif %}
-					  </div>
-					  {% if user.is_authenticated %}
-					  <div class="card-footer">
-						
-						<input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
-						<input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
-						<input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
-						<input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
-
-						<div class="d-flex">
-							<div class="p-2">
-								<button class="btn btn-sm btn-danger add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></button>
-							</div>
-							<div class="p-2">
-								<button class="btn btn-sm btn-primary add-to-cart" data-index="{{product.id}}"><i class="fa fa-shopping-cart"></i></button>
-							</div>
-							<div class="ml-auto p-2">
-								Rating {{product.rating}}({{product.review}})
-							</div>
-						  </div>
-						
+					<div class="product-item">
+				  <div class="overlay">
+					<a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
+							  <img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" />
+							</a>
+							<span class="rating">-{{product.discount}}%</span>
 						</div>
-						{% endif %}
-					</div>
+				  <div class="product-info">
+							<span>{{product.category}}</span>
+							<a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
+							<h4>BDT <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h4>
+						</div>
+						<ul class="icons">
+					  <input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+					  <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+					  <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+					  <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+					  {% if user.is_authenticated %}
+					  <li><i class="fa fa-heart add-wishlist" data-product="{{product.id}}"></i></li>
+					  <li><i class="fa fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i></li>
+					  {% endif %}
+					 
+						</ul>
 				</div>
 				{% endfor %}
-			</div>
+				</div>
 			<!--p class="my-4 text-center"><button id="loadMore" data-total="{{total_data}}" data-limit="3" class="btn btn-dark btn-sm">Load More <i class="fa fa-sync load-more-icon"></i></button></p-->
 		</div>
 	</div>

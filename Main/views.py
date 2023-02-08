@@ -24,7 +24,7 @@ def category_list(request):
 # Product List
 def product_list(request):
 	total_data=Product.objects.count()
-	data=Product.objects.all().order_by('-id')[:5]
+	data=Product.objects.all().order_by('-id')
 	min_price=ProductAttribute.objects.aggregate(Min('price'))
 	max_price=ProductAttribute.objects.aggregate(Max('price'))
 	return render(request,'product_list.html',
@@ -238,9 +238,7 @@ def password_change(request):
 # Checkout
 @login_required
 def checkout(request):
-	total_amt=0
 	totalAmt=0
-	msg=None
 	for p_id,item in request.session['cartdata'].items():
 		totalAmt+=float(item['qty'])*float(item['price'])
 	address=UserAddressBook.objects.filter(user=request.user).first()
@@ -281,8 +279,7 @@ def checkout(request):
 			return redirect('/my-orders')
 	
 	if 'cartdata' in request.session:
-		form=AddressBookForm(instance=address)
-		return render(request, 'checkout.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':totalAmt,'address':form})
+		return render(request, 'checkout.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':totalAmt,'address':address})
 	else:
 		return redirect('/')
 
