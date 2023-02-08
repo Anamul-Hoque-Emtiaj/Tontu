@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="container my-4">
+	<h3 class="my-4 border-bottom pb-1">Wishlist</h3>
+	{% if totalitems %}
+	<div class="row">
+		{% for wl in wlist %}
+		<div class="col-md-4 mb-4 product-box">
+			<div class="card shadow">
+			  <a href="/product/{{wl.product.slug}}/{{wl.product.id}}"><img src="/media/{{wl.product.productattribute_set.first.image}}" class="card-img-top" alt="{{wl.product.title}}"></a>
+			  <div class="card-body">
+				<h5 class="card-text text-center">{{wl.product.title}}</h5>
+				<h6 class="text-center">BDT <span class="product-price-{{wl.product.id}}">{{wl.product.productattribute_set.first.price}}</span></h6>
+			  </div>
+			  {% if user.is_authenticated %}
+			  <div class="card-footer">
+				
+				<input type="hidden" value="1" class="form-control product-qty-{{wl.product.id}}" id="productQty" />
+				<input type="hidden" class="product-image-{{wl.product.id}}" value="{{wl.product.productattribute_set.first.image}}" />
+				<input type="hidden" class="product-id-{{wl.product.id}}" value="{{wl.product.id}}" />
+				<input type="hidden" class="product-title-{{wl.product.id}}" value="{{wl.product.title}}" />
+
+				<div class="d-flex">
+					<div class="p-2">
+						<button class="btn btn-sm btn-primary add-to-cart" data-index="{{wl.product.id}}"><i class="fa fa-shopping-cart"></i></button>
+					</div>
+					<div class="p-2">
+						<a href="{% url 'delete-from-wishlist' wl.product.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+					</div>
+					
+					<div class="ml-auto p-2">
+						Rating {{wl.product.rating}}({{wl.product.review}})
+					</div>
+				  </div>
+				
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+	<div class="container">
+		<div class="my-5"></div>
+		<div class="my-5"></div>
+		<div class="my-5"></div>
+		<h3 class="text-center">Your Wishlist is currently empty.</h3>
+		<div class="my-5"></div>
+		<p class="text-center p-3 m-3">You don't have any products in the wishlist yet. Add some products to your shopping Wishlist.
+			You will find a lot of interesting products on our Shop.</p>
+		<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm">Return to shop </a></p>
+		<div class="my-5"></div>
+		<div class="my-5"></div>
+		<div class="my-5"></div>
+	</div>
+	{% endif %}
+</main>
+{% endblock %}

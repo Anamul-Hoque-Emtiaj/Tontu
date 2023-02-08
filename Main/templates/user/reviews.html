@@ -1,28 +1,50 @@
-{% extends 'user-sidebar.html' %}
+{% extends 'base.html' %}
 {% load static %}
-{% block content2 %}
+{% block content %}
 <main class="container my-4">
-	<!-- Featured Products -->
-	<h2 class="my-4 py-5 text-center">My Reviews</h2>
-	<div class="table-responsive">
-		<table class="table-bordered table">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Review Text</th>
-					<th>Review Rating</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for review in reviews %}
-				<tr>
-					<td><a href="/product/{{review.product.slug}}/{{review.product.id}}">{{review.product.title}}</a></td>
-					<td>{{review.review_text}}</td>
-					<td>{{review.review_rating}}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+	<div class="row">
+		<div class="col-12 col-md-3  mt-md-5">
+			{% include 'user/user-sidebar.html' %}
+		</div>
+		<div class="col-12 col-md-9">
+			<h3 class="my-4 border-bottom pb-1">Reviews</h3>
+			{% if totalitems %}
+			<div class="table-responsive">
+				<table class="table-bordered table">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Review Text</th>
+							<th>Review Rating</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for review in reviews %}
+						<tr>
+							<td><a href="/product/{{review.product.slug}}/{{review.product.id}}">{{review.product.title}}</a></td>
+							<td>{{review.review_text}}</td>
+							<td>{{review.review_rating}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<div class="container">
+				<div class="my-5"></div>
+				<div class="my-5"></div>
+				<div class="my-5"></div>
+				<h3 class="text-center">No Review given yet.</h3>
+				<div class="my-5"></div>
+				<p class="text-center p-3 m-3">You don't review any products yet. Explore, Order and review our products.
+					You will find a lot of interesting products on our Shop.</p>
+				<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm">Return to shop </a></p>
+				<div class="my-5"></div>
+				<div class="my-5"></div>
+				<div class="my-5"></div>
+			</div>
+			{% endif %}
+		</div>
 	</div>
 </main>
 {% endblock %}

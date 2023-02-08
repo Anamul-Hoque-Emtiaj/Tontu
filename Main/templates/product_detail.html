@@ -2,17 +2,17 @@
 {% load static %}
 {% block content %}
 <main class="container my-4">
-	<!-- Featured Products -->
-	<h3 class="my-4 border-bottom pb-1">{{data.title}}</h3>
+	<h3 class="my-4 border-bottom pb-1">Products/{{data.title}}</h3>
 	<div class="row">
-		<!-- Images -->
 		<div class="col-md-4">
 			<img id="zoom_01" data-zoom-image="/media/{{data.productattribute_set.first.image}}" src="/media/{{data.productattribute_set.first.image}}" class="card-img-top" alt="{{data.title}}">
 		</div>
 		<div class="col-md-8">
-			<p>{{data.detail}}</p>
-			<hr/>
 			<table class="table table-bordered">
+				<tr>
+					<th>Product Name</th>
+					<th>{{data.title}}</th>
+				</tr>
 				<tr>
 					<th>Status</th>
 					{% if data.status %}
@@ -20,6 +20,41 @@
 					{% else %}
 					<th> <span >Out of Stock</span></th>
 					{% endif %}
+				</tr>
+				<tr>
+					<th>Price</th>
+					<th>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
+				</tr>
+			</table>
+			<hr/>
+			
+			<div class="input-group my-3" >
+			    <input type="number" value="1" class="form-control m-2 product-qty-{{data.id}}" id="productQty" />
+				{% if user.is_authenticated %}
+				<input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
+		        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+		        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+				<div class="d-flex">
+					<button class="btn btn-primary btn-sm add-to-cart m-2" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+					<button class="btn btn-sm btn-danger add-wishlist m-2" data-product="{{data.id}}"><i class="fa fa-heart"></i> WishList</button>
+				</div>
+				{% else %}
+				<div class="d-flex">
+					<a href="/accounts/login"><button class="btn btn-primary px-1 m-2" ><i class="fa fa-shopping-cart"></i> Add to Cart</button></a>
+					<a href="/accounts/login"></a><button class="btn btn-sm btn-danger m-2" ><i class="fa fa-heart"></i> WishList</button></a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-md-6">
+			<h3 class="my-3">Detail</h3>
+			<table class="table table-bordered">
+				<tr>
+					<th>Category</th>
+					<td><a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a></td>
 				</tr>
 				<tr>
 					<th>Colors</th>
@@ -30,41 +65,11 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Price</th>
-					<th>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
-				</tr>
-			</table>
-			<hr/>
-			<div class="input-group my-3" style="width:30%;">
-			  <input type="number" value="1" class="form-control product-qty-{{data.id}}" id="productQty" />
-			  <div class="input-group-append">
-			  	<input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
-		        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
-		        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
-				{% if user.is_authenticated %}
-			    <button class="btn btn-primary btn-sm add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-				{% else %}
-				<a href="/accounts/login"><button class="btn btn-primary px-1 add-to-cart" ><i class="fa fa-shopping-cart"></i> Add to Cart</button></a>
-				{% endif %}
-			  </div>
-			</div>
-		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<div class="col-md-6">
-			<h3 class="my-3">Detail</h3>
-			<!-- Detail -->
-			<table class="table table-bordered">
-				<tr>
-					<th>Category</th>
-					<td><a href="/category-product-list/{{data.category.id}}">{{data.category.title}}</a></td>
-				</tr>
-				<tr>
 					<th>Specification</th>
 					<td>{{data.specs}}</td>
 				</tr>
 			</table>
+			<p>{{data.detail}}</p>
 		</div>
 		<!-- Reviews -->
 		<div class="col-md-6">

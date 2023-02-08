@@ -15,6 +15,7 @@ urlpatterns=[
     path('load-more-data',views.load_more_data,name='load_more_data'),
     path('add-to-cart',views.add_to_cart,name='add_to_cart'),
     path('cart',views.cart_list,name='cart'),
+    path('cart/',views.cart_list,name='cart1'),
     path('delete-from-cart',views.delete_cart_item,name='delete-from-cart'),
     path('update-cart',views.update_cart_item,name='update-cart'),
     path('accounts/signup',views.signup,name='signup'),

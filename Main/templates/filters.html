@@ -33,8 +33,14 @@
 				<div class="list-group list-group-flush">
 					{% for cat in cats %}
 					<li class="list-group-item">
+						{% if cat.category__title == title %}
+						<input class="filter-checkbox" data-filter="category" value="{{cat.category__id}}" type="checkbox" checked />&nbsp;
+						{{cat.category__title}}
+						{% else %}
 						<input class="filter-checkbox" data-filter="category" value="{{cat.category__id}}" type="checkbox" />&nbsp;
 						{{cat.category__title}}
+						{% endif %}
+						
 					</li>
 					{% endfor %}
 				</div>

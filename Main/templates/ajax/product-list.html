@@ -1,25 +1,44 @@
 {% for product in data %}
-<div class="col-lg-4 col-md-6 mb-4 product-box">
+<div class="col-md-4 mb-4 product-box">
 	<div class="card shadow">
 	  <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}"></a>
 	  <div class="card-body">
-	    <h5 class="card-text"><a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a></h5>
-	    <h6>BDT {{product.productattribute_set.first.price}}</h6>
+		<h5 class="card-text text-center">{{product.title}}</h5>
+		{% if user.is_anonymous %}
+		<div class="d-flex">
+			<div class="p-2">
+			BDT {{product.productattribute_set.first.price}}
+			</div>
+			<div class="ml-auto p-2">
+			Rating: {{product.rating}}({{product.review}})
+			</div>
+			</div>
+		{% else %}
+		<h6 class="text-center">BDT <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h6>
+		{% endif %}
 	  </div>
 	  {% if user.is_authenticated %}
-		<div class="card-footer">
-         
-          <input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
-          <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
-          <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
-          <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
-          
-		  <button class="btn btn-sm btn-danger add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></button>
-          <button class="btn btn-sm btn-primary add-to-cart" data-index="{{product.id}}"><i class="fa fa-shopping-cart"></i></button>
-          
+	  <div class="card-footer">
+		
+		<input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+		<input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+		<input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+		<input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+
+		<div class="d-flex">
+			<div class="p-2">
+				<button class="btn btn-sm btn-danger add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></button>
+			</div>
+			<div class="p-2">
+				<button class="btn btn-sm btn-primary add-to-cart" data-index="{{product.id}}"><i class="fa fa-shopping-cart"></i></button>
+			</div>
+			<div class="ml-auto p-2">
+				Rating {{product.rating}}({{product.review}})
+			</div>
+		  </div>
+		
 		</div>
-        {% endif %}
+		{% endif %}
 	</div>
 </div>
 {% endfor %}
-			

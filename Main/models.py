@@ -63,7 +63,9 @@ class Product(models.Model):
     specs=models.TextField()
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     status=models.BooleanField(default=True)
-    is_featured=models.BooleanField(default=False)
+    is_featured=models.BooleanField(default=True)
+    rating = models.DecimalField(null=True,max_digits=5, decimal_places=2)
+    review = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural='6. Products'
@@ -75,7 +77,6 @@ class Product(models.Model):
 class ProductAttribute(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     color=models.ForeignKey(Color,on_delete=models.CASCADE)
-    # size=models.ForeignKey(Size,on_delete=models.CASCADE)
     price=models.PositiveIntegerField(default=0)
     image=models.ImageField(upload_to="product_imgs/",null=True)
 

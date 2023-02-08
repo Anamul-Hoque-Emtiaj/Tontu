@@ -9,7 +9,6 @@ from .forms import SignupForm,ReviewAdd,AddressBookForm,ProfileForm
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 
-
 # Home Page
 def home(request):
 	banners=Banner.objects.all().order_by('-id')
@@ -25,7 +24,7 @@ def category_list(request):
 # Product List
 def product_list(request):
 	total_data=Product.objects.count()
-	data=Product.objects.all().order_by('-id')[:3]
+	data=Product.objects.all().order_by('-id')[:5]
 	min_price=ProductAttribute.objects.aggregate(Min('price'))
 	max_price=ProductAttribute.objects.aggregate(Max('price'))
 	return render(request,'product_list.html',
@@ -40,9 +39,16 @@ def product_list(request):
 # Product List According to Category
 def category_product_list(request,cat_id):
 	category=Category.objects.get(id=cat_id)
+	total_data=Product.objects.filter(category=category).count()
 	data=Product.objects.filter(category=category).order_by('-id')
+	min_price=ProductAttribute.objects.aggregate(Min('price'))
+	max_price=ProductAttribute.objects.aggregate(Max('price'))
 	return render(request,'category_product_list.html',{
 			'data':data,
+			'total_data':total_data,
+			'category':category,
+			'min_price':min_price,
+			'max_price':max_price
 			})
 
 
@@ -92,7 +98,7 @@ def filter_data(request):
 	if len(categories)>0:
 		allProducts=allProducts.filter(category__id__in=categories).distinct()
 	
-	t=render_to_string('ajax/product-list.html',{'data':allProducts})
+	t=render_to_string('ajax/product-list.html',{'data':allProducts,'user':request.user})
 	return JsonResponse({'data':t})
 
 # Load More
@@ -100,9 +106,8 @@ def load_more_data(request):
 	offset=int(request.GET['offset'])
 	limit=int(request.GET['limit'])
 	data=Product.objects.all().order_by('-id')[offset:offset+limit]
-	t=render_to_string('ajax/product-list.html',{'data':data})
-	return JsonResponse({'data':t}
-)
+	t=render_to_string('ajax/product-list.html',{'data':data,'user':request.user})
+	return JsonResponse({'data':t})
 
 # Add to cart
 @login_required
@@ -117,6 +122,7 @@ def add_to_cart(request):
 		'qty':request.GET['qty'],
 		'price':request.GET['price'],
 	}
+	print(cart_p)
 	if 'cartdata' in request.session:
 		if str(request.GET['id']) in request.session['cartdata']:
 			cart_data=request.session['cartdata']
@@ -137,7 +143,8 @@ def cart_list(request):
 	total_amt=0
 	if 'cartdata' in request.session:
 		for p_id,item in request.session['cartdata'].items():
-			total_amt+=int(item['qty'])*float(item['price'])
+			print(item['qty'],item['price'])
+			total_amt+=int(item['qty'])*int(item['price'])
 		return render(request, 'cart.html',{'cart_data':request.session['cartdata'],'totalitems':len(request.session['cartdata']),'total_amt':total_amt})
 	else:
 		return render(request, 'cart.html',{'cart_data':'','totalitems':0,'total_amt':total_amt})
@@ -182,8 +189,6 @@ def signup(request):
 			return render(request, 'registration/signup.html',{'error':'password didnot matched'})
 		if User.objects.filter(username = user['username']):
 			return render(request, 'registration/signup.html',{'error':'UserName already exist'})
-		if User.objects.filter(email = user['email']):
-			return render(request, 'registration/signup.html',{'error':'Email already exist'})
 		if User.objects.filter(email = len(user['password1'])<8):
 			return render(request, 'registration/signup.html',{'error':'Password length Must be greater than 8'})
         	
@@ -212,19 +217,23 @@ def login(request):
 
 	return render(request, 'registration/login.html')
 
-#password_change ///incomplete
+#password_change 
+@login_required
 def password_change(request):
-	if request.method == 'POST':
-		if not User.objects.filter(username = request.POST['username']):
-			return render(request, 'registration/login.html',{'error':'Username not found'})
-		user = User.objects.filter(username = request.POST['username'])
-		if not user.check_password(request.POST['password']):
-			return render(request, 'registration/login.html',{'error':'Password did not match'})
-		user2=authenticate(username=request.POST['username'],password=request.POST['password'])
-		login(request, user2)
-		return redirect('home')
-
-	return render(request, 'registration/login.html')
+	msg=None
+	if request.method=='POST':
+		user = request.POST
+		user1=User.objects.get(username = request.user)
+		print(user)
+		if not user1.check_password(user['password3']):
+			msg = 'Old Password did not match'
+		elif user['password1'] != user['password2']:
+			msg = 'Passwords did not match'
+		else:
+			msg='Password changed'
+			user1.set_password(user['password1'])
+			user1.save()
+	return render(request, 'user/password_change.html',{'error':msg})
 
 # Checkout
 @login_required
@@ -290,15 +299,18 @@ def save_review(request,pid):
 		review_text=request.POST['review_text'],
 		review_rating=request.POST['review_rating'],
 		)
+	cnt = product.review
+	
+	avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
+	product.rating = avg_reviews['avg_rating']
+	product.review = cnt+1
+	product.save()
 	data={
 		'user':user.username,
 		'review_text':request.POST['review_text'],
 		'review_rating':request.POST['review_rating']
 	}
 
-	# Fetch avg rating for reviews
-	avg_reviews=ProductReview.objects.filter(product=product).aggregate(avg_rating=Avg('review_rating'))
-	# End
 
 	return JsonResponse({'bool':True,'data':data,'avg_reviews':avg_reviews})
 
@@ -318,14 +330,14 @@ def my_dashboard(request):
 @login_required
 def my_orders(request):
 	orders=CartOrder.objects.filter(user=request.user).order_by('-id')
-	return render(request, 'user/orders.html',{'orders':orders})
+	return render(request, 'user/orders.html',{'orders':orders,'totalitems':len(orders)})
 
 # Order Detail
 @login_required
 def my_order_items(request,id):
 	order=CartOrder.objects.get(pk=id)
 	orderitems=CartOrderItems.objects.filter(order=order).order_by('-id')
-	return render(request, 'user/order-items.html',{'orderitems':orderitems})
+	return render(request, 'user/order-items.html',{'orderitems':orderitems,'id':id})
 
 # Wishlist
 @login_required
@@ -352,28 +364,36 @@ def add_wishlist(request):
 @login_required
 def my_wishlist(request):
 	wlist=Wishlist.objects.filter(user=request.user).order_by('-id')
-	return render(request, 'user/wishlist.html',{'wlist':wlist})
+	return render(request, 'wishlist.html',{'wlist':wlist,'totalitems':len(wlist)})
 @login_required
 def delete_from_wishlist(request,id):
-	Wishlist.objects.filter(id=id).delete()
+	product = Product.objects.get(pk=id)
+	Wishlist.objects.filter(product=product,user=request.user).delete()
 	wlist=Wishlist.objects.filter(user=request.user).order_by('-id')
-	return render(request, 'user/wishlist.html',{'wlist':wlist})
+	return render(request, 'wishlist.html',{'wlist':wlist,'totalitems':len(wlist)})
 # My Reviews
 @login_required
 def my_reviews(request):
 	reviews=ProductReview.objects.filter(user=request.user).order_by('-id')
-	return render(request, 'user/reviews.html',{'reviews':reviews})
+	return render(request, 'user/reviews.html',{'reviews':reviews,'totalitems':len(reviews)})
 
 # Edit Profile
+@login_required
 def edit_profile(request):
 	msg=None
 	if request.method=='POST':
-		form=ProfileForm(request.POST,instance=request.user)
-		if form.is_valid():
-			form.save()
+		user = request.POST
+		user1=User.objects.get(username = request.user)
+		print(user)
+		if not user1.check_password(user['password']):
+			msg = 'Password did not match'
+		else:
 			msg='Data has been saved'
-	form=ProfileForm(instance=request.user)
-	return render(request, 'user/edit-profile.html',{'form':form,'msg':msg})
+			user1.first_name = user['first_name']
+			user1.last_name = user['last_name']
+			user1.email = user['email']
+			user1.save()
+	return render(request, 'user/edit-profile.html',{'error':msg})
 
 def password(request):
 	return redirect('/accounts/password_change/')

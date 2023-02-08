@@ -7,14 +7,10 @@
 		<div class="col-md-8">
 			<h3 class="my-4 border-bottom pb-1">Billing Details</h3>
 			<table class="table table-bordered">
-				<form method="post">
+				<form id="myform" method="post">
 					{% csrf_token %}
 					{{address.as_table}}
-					<tr>
-						<td colspan="2">
-							<input type="submit" value="submit" class="btn btn-primary" />
-						</td>
-					</tr>
+					
 				</form>
 			</table>
 		</div>
@@ -46,6 +42,7 @@
 			</table>
 			<p>Cash on delivery</p>
 			<p>Get the product(s) first and pay later.</p>
+			<input type="submit" value="submit" class="btn btn-primary" form="myform" />
 		</div>
 	</div>
 </main>
