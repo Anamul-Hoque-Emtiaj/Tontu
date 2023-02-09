@@ -3,7 +3,7 @@
 {% block content %}
 <main class="container my-4">
 	<!-- Featured Products -->
-	<h3 class="my-4 border-bottom pb-1">Categories</h3>
+	<h1 class="my-4 border-bottom pb-1">Categories</h1>
 	<div class="product-center container">
 		{% for cat in data %}
 			<div class="product-item">
@@ -13,7 +13,7 @@
 					</a>
 				</div>
 		  <div class="product-info">
-				<a href="/category-product-list/{{cat.id}}">{{cat.title}}</a>
+				<a href="/category-product-list/{{cat.id}}" style="font-size: 1.9rem;">{{cat.title}}</a>
 			</div>
 		</div>
 		{% endfor %}

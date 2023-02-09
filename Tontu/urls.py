@@ -23,3 +23,8 @@ urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = 'Main.views.error_404'
+# handler500 = 'Main.views.error_500'
+handler403 = 'Main.views.error_403'
+handler400 = 'Main.views.error_400'

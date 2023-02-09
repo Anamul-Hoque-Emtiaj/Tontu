@@ -1,4 +1,4 @@
-<h3 class="my-4 border-bottom pb-1">Cart ({{totalitems}})</h3>
+<h1 class="my-4 border-bottom pb-1">Cart ({{totalitems}})</h1>
 	{% if totalitems %}
 	<div class="cart">
 		<table>
@@ -20,9 +20,9 @@
 				</td>
 				<td>
 					<div class="cart-info">
-						<input type="number" min="1" class="product-qty-{{product_id}} m-1" value="{{item.qty}}"  />
-						<button class="btn btn-sm btn-primary update-item m-1" data-item="{{product_id}}"><i class="fa fa-sync"></i></button>
-						<button class="btn btn-sm btn-danger delete-item m-1" data-item="{{product_id}}"><i class="fa fa-trash"></i></button>
+						<input type="number" min="1" class="product-qty-{{product_id}} m-1" style="font-size: 1.55rem;" value="{{item.qty}}"  />
+						<button class="btn btn-sm btn-primary update-item m-1" style="font-size: 1.5rem;" data-item="{{product_id}}"><i class="fa fa-sync"></i></button>
+						<button class="btn btn-sm btn-danger delete-item m-1" style="font-size: 1.5rem;" data-item="{{product_id}}"><i class="fa fa-trash"></i></button>
 					</div>
 					
 				</td>
@@ -37,7 +37,7 @@
 			  </tr>
 			</table>
 			{% if totalitems %}
-			<a href="{% url 'checkout' %}" class="checkout btn">Checkout <i class="fa fa-long-arrow-alt-right"></i></a>
+			<a href="{% url 'checkout' %}" class="checkout btn" style="font-size: 1.6rem;">Checkout <i class="fa fa-long-arrow-alt-right"></i></a>
 			{% endif %}
 		  </div>
 	</div>
@@ -51,7 +51,7 @@
 		<p class="text-center ">Before proceed to checkout you must add some products to your shopping cart.
 			You will find a lot of interesting products on our Shop.</p>
 		<div class="my-5"></div>
-		<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm">Return to shop </a></p>
+		<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm" style="font-size: 1.6rem;">Return to shop </a></p>
 		<div class="my-5"></div>
 		<div class="my-5"></div>
 		<div class="my-5"></div>

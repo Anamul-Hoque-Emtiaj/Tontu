@@ -7,7 +7,7 @@
 			{% include 'user/user-sidebar.html' %}
 		</div>
 		<div class="col-12 col-md-9">
-			<h3 class="my-4 border-bottom pb-1">Orders/{{id}}</h3>
+			<h1 class="my-4 border-bottom pb-1">Orders/{{id}}</h1>
 			<div class="table-responsive">
 				<table class="table-bordered table">
 					<thead>
@@ -16,7 +16,7 @@
 							<th>Item</th>
 							<th>Qty</th>
 							<th>Price</th>
-							<th>Total</th>
+							<th>Sub Total</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,6 +35,13 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="total-price">
+				<table>
+					<td>Total</td>
+					<td>BDT {{order.total_amt}}</td>
+				  </tr>
+				</table>
+			  </div>
 		</div>
 	</div>
 </main>

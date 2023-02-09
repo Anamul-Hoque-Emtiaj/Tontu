@@ -3,7 +3,7 @@
 {% block content %}
 
 <main class="container my-4">
-	<h3 class="my-4 border-bottom pb-1">Wishlist</h3>
+	<h1 class="my-4 border-bottom pb-1">Wishlist</h1>
 	{% if totalitems %}
 	<div class="product-center container">
 		{% for wl in wlist %}
@@ -18,7 +18,7 @@
 			  <div class="product-info">
 				<span>{{wl.product.category}}</span>
 				<a href="/product/{{wl.product.slug}}/{{wl.product.id}}">{{wl.product.title}}</a>
-				<h4>BDT <span class="product-price-{{wl.product.id}}">{{wl.product.productattribute_set.first.price}}</span></h4>
+				<h4>BDT <span class="product-price-{{wl.product.id}}" style="font-size: 1.6rem;">{{wl.product.productattribute_set.first.price}}</span></h4>
 			  </div>
 			  <ul class="icons">
 				<li><a href="{% url 'delete-from-wishlist' wl.product.id %}" ><i class="fa fa-trash"></i></a></li>
@@ -36,11 +36,11 @@
 		<div class="my-5"></div>
 		<div class="my-5"></div>
 		<div class="my-5"></div>
-		<h3 class="text-center">Your Wishlist is currently empty.</h3>
+		<h2 class="text-center">Your Wishlist is currently empty.</h2>
 		<div class="my-5"></div>
-		<p class="text-center p-3 m-3">You don't have any products in the wishlist yet. Add some products to your shopping Wishlist.
+		<p class="text-center p-3 m-3">You don't add any products in your wishlist yet. Add some products to your shopping Wishlist.
 			You will find a lot of interesting products on our Shop.</p>
-		<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm">Return to shop </a></p>
+		<p class="text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm" style="font-size: 1.6rem;">Return to shop </a></p>
 		<div class="my-5"></div>
 		<div class="my-5"></div>
 		<div class="my-5"></div>

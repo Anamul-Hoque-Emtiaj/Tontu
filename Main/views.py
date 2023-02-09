@@ -15,6 +15,20 @@ def home(request):
 	data=Product.objects.filter(is_featured=True).order_by('-id')
 	return render(request,'index.html',{'data':data,'banners':banners})
 
+def error_404(request, exception):
+	return render(request,'error.html',{'msg':'page_not_found','code':404})
+    
+
+# def error_500(request,  exception):
+#     return render(request,'error.html',{'msg':'internal_server_error','code':500})
+        
+def error_403(request, exception):
+
+    return render(request,'error.html',{'msg':'forbidden_error','code':403})
+
+def error_400(request,  exception):
+    return render(request,'error.html',{'msg':'bad_request_error','code':400}) 
+
 # Category
 def category_list(request):
     data=Category.objects.all().order_by('-id')
@@ -334,7 +348,7 @@ def my_orders(request):
 def my_order_items(request,id):
 	order=CartOrder.objects.get(pk=id)
 	orderitems=CartOrderItems.objects.filter(order=order).order_by('-id')
-	return render(request, 'user/order-items.html',{'orderitems':orderitems,'id':id})
+	return render(request, 'user/order-items.html',{'orderitems':orderitems,'id':id, 'order':order})
 
 # Wishlist
 @login_required
