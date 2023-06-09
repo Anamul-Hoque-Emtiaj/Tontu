@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>তন্তু</title> 
 	<!-- Font Awesome -->
 	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free/css/all.min.css' %}" />
@@ -14,63 +17,127 @@
 	<!-- CustomJs -->
 	<link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}" />
 	<script type="text/javascript" src="{% static 'custom.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+	
+	<script type="text/javascript" src="{% static 'slider.js' %}"></script>
+	<script type="text/javascript" src="{% static 'zoomsl.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'index.js' %}"></script>
+
+	<link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
 </head>
 <body>
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
-		
-		/* Color Variables */
-		:root {
-		  --white: #fff;
-		  --black: #222;
-		  --green: #6cbe02;
-		  --grey1: #f0f0f0;
-		  --grey2: #e9d7d3;
+		.myheader{
+			background:var(--green);
 		}
-		
-		/* Basic Reset */
-		*,
-		*::before,
-		*::after {
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: inherit;
+
+		.myheader .mynavbar{
+			text-align: center;
+			
 		}
-		
-		html {
-		  box-sizing: border-box;
-		  font-size: 62.5%;
+
+		.myheader .mynavbar a{
+			color:#fff;
+			display: inline-block;
+			padding:1.2rem;
+			font-size: 1.7rem;
+			text-decoration: none;
 		}
-		
-		body {
-		  font-family: 'Roboto', sans-serif;
-		  font-size: 1.6rem;
-		  background-color: var(--white);
-		  color: var(--black);
-		  font-weight: 400;
-		  font-style: normal;
+
+		.myheader .mynavbar a:hover{
+			background:var(--dark-color);
 		}
-		
-		a {
-		  text-decoration: none;
-		  color: var(--black);
+
+		.myheader .active{
+			position:fixed;
+			top:0; left:0; right:0;
+			z-index: 1000;
+
 		}
-		
-		li {
-		  list-style: none;
+		.deal{
+			background:#f3f3f3;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap:1.5rem;
 		}
-		
-		.container {
-		  max-width: 114rem;
-		  margin: 0 auto;
-		  padding: 0 3rem;
+
+		.deal .content{
+			flex:1 1 42rem;
 		}
-		
-		.d-flex {
-		  display: flex;
-		  align-items: center;
+
+		.deal .image{
+			flex:1 1 42rem;
 		}
-		
+
+		.deal .image img{
+			width: 100%;
+		}
+
+		.deal .content h3{
+			color:var(--green);
+			font-size: 2.5rem;
+			padding-bottom: .5rem;
+		}
+
+		.deal .content h1{
+			color:var(--black);
+			font-size: 4rem;
+		}
+
+		.deal .content p{
+			padding:1rem 0;
+			color:var(--light-color);
+			font-size: 1.4rem;
+			line-height: 2;
+		}
+
+
+		.newsletter{
+			background:url('{% static "image/tontu2.jpg" %}') no-repeat;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+		}
+
+		.newsletter form{
+			max-width: 45rem;
+			margin-left: auto;
+			text-align: center;
+			padding:5rem 0;
+		}
+
+		.newsletter form h3{
+			font-size: 2.4rem;
+			color:#fff;
+			padding-bottom: .7rem;
+			font-weight: normal;
+		}
+
+		.newsletter form p{
+			font-size: 1.8rem;
+			color:#fff;
+			padding-bottom: .7rem;
+			font-weight: normal;
+		}
+
+		.newsletter form .box{
+			width: 100%;
+			margin: .7rem 0;
+			padding:1rem 1.2rem;
+			font-size: 1.6rem;
+			color:var(--black);
+			border-radius: .5rem;
+			text-transform: none;
+		}
+
 		.title {
 		  text-align: center;
 		  margin-bottom: 5rem;
@@ -82,142 +149,6 @@
 		  margin-bottom: 1rem;
 		  font-weight: 500;
 		}
-		
-		.product-center {
-		  display: flex;
-		  align-items: center;
-		  justify-content: center;
-		  flex-wrap: wrap;
-		  max-width: 120rem;
-		  margin: 0 auto;
-		  padding: 0 2rem;
-		}
-		
-		.product-item {
-		  position: relative;
-		  width: 27rem;
-		  margin: 0 auto;
-		  margin-bottom: 3rem;
-		}
-		
-		.product-thumb img {
-		  width: 100%;
-		  height: 31rem;
-		  object-fit: cover;
-		  transition: all 500ms linear;
-		}
-		
-		.product-info {
-		  padding: 1rem;
-		  text-align: center;
-		}
-		
-		.product-info span {
-		  display: inline-block;
-		  font-size: 1.2rem;
-		  color: #666;
-		  margin-bottom: 1rem;
-		}
-		
-		.product-info a {
-		  font-size: 1.5rem;
-		  display: block;
-		  margin-bottom: 1rem;
-		  transition: all 300ms ease;
-		}
-		
-		.product-info a:hover {
-		  color: var(--green);
-		}
-		
-		.product-item .icons {
-		  position: absolute;
-		  left: 50%;
-		  top: 35%;
-		  transform: translateX(-50%);
-		  display: flex;
-		  align-items: center;
-		}
-		
-		.product-item .icons li {
-		  background-color: var(--white);
-		  text-align: center;
-		  padding: 1rem 1.5rem;
-		  font-size: 2.3rem;
-		  cursor: pointer;
-		  transition: 300ms ease-out;
-		  transform: translateY(20px);
-		  visibility: hidden;
-		  opacity: 0;
-		}
-		
-		.product-item .icons li:first-child {
-		  transition-delay: 0.1s;
-		}
-		
-		.product-item .icons li:nth-child(2) {
-		  transition-delay: 0.2s;
-		}
-		
-		.product-item .icons li:nth-child(3) {
-		  transition-delay: 0.3s;
-		}
-		
-		.product-item:hover .icons li {
-		  visibility: visible;
-		  opacity: 1;
-		  transform: translateY(0);
-		}
-		
-		.product-item .icons li:not(:last-child) {
-		  margin-right: 0.5rem;
-		}
-		
-		.product-item .icons li:hover {
-		  background-color: var(--green);
-		  color: var(--white);
-		}
-		
-		.product-item .overlay {
-		  position: relative;
-		  overflow: hidden;
-		  cursor: pointer;
-		  width: 100%;
-		}
-		
-		.product-item .overlay::after {
-		  content: '';
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  width: 100%;
-		  height: 100%;
-		  background-color: rgba(0, 0, 0, 0.5);
-		  visibility: hidden;
-		  opacity: 0;
-		  transition: 300ms ease-out;
-		}
-		
-		.product-item:hover .overlay::after {
-		  visibility: visible;
-		  opacity: 1;
-		}
-		
-		.product-item:hover .product-thumb img {
-		  transform: scale(1.1);
-		}
-		
-		.product-item .discount {
-		  position: absolute;
-		  top: 1rem;
-		  left: 1rem;
-		  background-color: var(--green);
-		  padding: 0.5rem 1rem;
-		  color: var(--white);
-		  border-radius: 2rem;
-		  font-size: 1.5rem;
-		}
-		
 		.product-item .rating {
 		  position: absolute;
 		  top: 1rem;
@@ -228,176 +159,198 @@
 		  border-radius: 2rem;
 		  font-size: 1.5rem;
 		}
-		
-		@media only screen and (max-width: 567px) {
-		  .product-center {
-			max-width: 100%;
-			padding: 0 1rem;
-		  }
-		
-		  .product-item {
-			width: 40%;
-			margin-bottom: 3rem;
-		  }
-		
-		  .product-thumb img {
-			height: 20rem;
-		  }
-		
-		  .product-item {
-			margin-right: 2rem;
-		  }
-		
-		  .product-item .icons li {
-			padding: 0.5rem 1rem;
-			font-size: 1.8rem;
-		  }
+		section{
+			padding:5rem 9%;
 		}
 
-		.cart {
-  margin: 10rem auto;
-}
+		.heading{
+			text-align: center;
+			margin-bottom: 2rem;
+			position: relative;
+		}
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+		.heading::before{
+			content: '';
+			position: absolute;
+			top:50%; left:0;
+			transform: translateY(-50%);
+			width: 100%;
+			height:.01rem;
+			background: rgba(0,0,0,.1);
+			z-index: -1;
+		}
 
-.cart-info {
-  display: flex;
-  flex-wrap: wrap;
-}
+		.heading span{
+			font-size: 3rem;
+			padding:.5rem 2rem;
+			color:var(--black);
+			background: #fff;
+			border:var(--border);
+		}
 
-th {
-  text-align: left;
-  padding: 0.5rem;
-  color: #fff;
-  background-color: var(--green);
-  font-weight: normal;
-}
+		.icons-container{
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+			gap:1.5rem;
+		}
 
-td {
-  padding: 1rem 0.5rem;
-}
+		.icons-container .icons{
+			display: flex;
+			align-items: center;
+			gap:1.5rem;
+			padding:2rem 0;
+		}
 
-td input {
-  width: 5rem;
-  height: 3rem;
-  padding: 0.5rem;
-}
+		.icons-container .icons i{
+			font-size: 3.5rem;
+			color:var(--green);
+		}
 
-td a {
-  color: orangered;
-  font-size: 1.4rem;
-}
+		.icons-container .icons h3{
+			font-size: 2.2rem;
+			color:var(--black);
+			padding-bottom: .5rem;
+		}
 
-td img {
-  width: 8rem;
-  height: 8rem;
-  margin-right: 1rem;
-}
+		.icons-container .icons p{
+			font-size: 1.4rem;
+			color:var(--light-color);
+		}
 
-.total-price {
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  margin-top: 2rem;
-}
 
-.total-price table {
-  border-top: 3px solid var(--green);
-  width: 100%;
-  max-width: 35rem;
-}
+		.btn{
+			margin-top: 1rem;
+			display:inline-block;
+			padding:.9rem 3rem;
+			border-radius: .5rem;
+			color:#fff;
+			background:var(--green);
+			font-size: 1.7rem;
+			cursor: pointer;
+			font-weight: 500;
+		}
 
-td:last-child {
-  text-align: right;
-}
+		.btn:hover{
+			background:var(--dark-color);
+		}
 
-th:last-child {
-  text-align: right;
-}
+		@media only screen and (max-width: 567px) {
+		.cart-info p {
+			display: none;
+		}
+		.navbar-nav {
+				margin: auto;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
 
-.checkout {
-  display: inline-block;
-  background-color: var(--green);
-  color: white;
-  padding: 1rem;
-  margin-top: 1rem;
-}
+		.nav-link {
+		font-size: 1.8rem;
+		color: var(--black);
+		padding: 1rem;
+		}
 
-@media only screen and (max-width: 567px) {
-  .cart-info p {
-    display: none;
-  }
-}
+		.nav-link:hover {
+		color: var(--green);
+		}
 
-.nav-link {
-  font-size: 1.8rem;
-  padding: 1rem;
-}
+		.container .navbar-brand{
+		font-size: 2rem;
+		padding: 1rem;
+		}
+				
+	</style>
 
-.nav-link:hover {
-  color: var(--green);
-}
-
-.container .navbar-brand{
-  font-size: 2rem;
-  padding: 1rem;
-}
-
-</style>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container">
-		  <a class="navbar-brand" href="/">তন্তু </a>
-		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		    <span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarNav">
-		  	<form class="form-inline my-2 my-lg-0" action="/search">
-		      <div class="input-group"> 
-				  <input name="q" type="text" class="form-control" placeholder="search" style="font-size: 1.7rem;" />
-				  <div class="input-group-append">
-				    <button class="btn btn-secondary" type="submit" id="button-addon2" style="font-size: 1.7rem;">Search</button>
-				  </div>
-				</div>
-		    </form>
-		    <ul class="navbar-nav ml-auto">
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="/">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="{% url 'category-list' %}">Categories</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart (<span class="cart-list">{{request.session.cartdata|length}}</span>)</a>
-		      </li>
-			  <li class="nav-item">
-		        <a class="nav-link text-white mx-1" href="{% url 'my_wishlist' %}"> <i class="fa fa-heart"> </i> Wishlist</a>
-		      </li>
-		      <li class="nav-item dropdown">
-		        <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          <i class="fa fa-user"></i> My Account
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		        {% if user.is_authenticated %}
-		        	<a class="dropdown-item" href="{% url 'my_dashboard' %}" style="font-size: 1.6rem;">Dashboard</a>
-		        	<a class="dropdown-item" href="{% url 'logout' %}" style="font-size: 1.6rem;">Logout</a>
-	        	{% else %}
-	        		<a class="dropdown-item" href="{% url 'login' %}" style="font-size: 1.6rem;">Login</a>
-		          <a class="dropdown-item" href="{% url 'signup' %}"style="font-size: 1.6rem;" >Signup</a>
-		        {% endif %}
-		        </div>
-		      </li>
-		    </ul>
-		  </div>
-		</div>
-    </nav>
-    
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="home">
+	<div class="container">
+	  <a class="navbar-brand" href="/"><h1>তন্তু</h1> </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNav">
+		  <form class="form-inline ml-auto" action="/search">
+		  <div class="input-group"> 
+			  <input name="q" type="text" class="form-control" placeholder="search" style="font-size: 1.8rem;" />
+			  <div class="input-group-append">
+				<button class="mx-1" type="submit" id="button-addon2" style="font-size: 1.8rem;"><i class="fas fa-search"></i></button>
+			  </div>
+			</div>
+		</form>
+		<ul class="navbar-nav ml-auto mx-1>
+		  <li class="nav-item">
+			<a class="nav-link" href="{% url 'cart' %}">
+				<i class="fas fa-shopping-cart fa-lg">
+				</i> 
+				<sup> 
+					<span class="cart-list">{{request.session.cartdata|length}}</span>
+				</sup>
+			</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link " href="{% url 'my_wishlist' %}"> <i class="fas fa-heart fa-lg"> </i> </a>
+		  </li>
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <i class="fas fa-user fa-lg"></i> </a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			{% if user.is_authenticated %}
+				<a class="dropdown-item" href="{% url 'my_dashboard' %}" style="font-size: 1.6rem;">Dashboard</a>
+				<a class="dropdown-item" href="{% url 'logout' %}" style="font-size: 1.6rem;">Logout</a>
+			{% else %}
+				<a class="dropdown-item" href="{% url 'login' %}" style="font-size: 1.6rem;">Login</a>
+			  <a class="dropdown-item" href="{% url 'signup' %}"style="font-size: 1.6rem;" >Signup</a>
+			{% endif %}
+			</div>
+		  </li>
+		</ul>
+	  </div>
+	</div>
+</nav>
+<div class="myheader">
+	<nav class="d-flex justify-content-center mynavbar">
+		<a href="{% url 'home' %}#home">Home</a>
+		<a href="{% url 'home' %}#category">Categories</a>
+		<a href="{% url 'home' %}#featured">Featured</a>
+		<a href="{% url 'home' %}#arrivals">Arrivals</a>
+	</nav>
+</div>
     {% block content %}
     {% endblock %}
 
-<footer class="pt-4 mt-md-5 pt-md-5 border-top bg-dark">
+<!-- Footer -->
+<footer class="footer">
+	<div class="row">
+	  <div class="col d-flex">
+		<h4>INFORMATION</h4>
+		<a href="{% url 'about-us' %}">About us</a>
+		<a href="#">Term & Conditions</a>
+		<a href="#">Shipping Guide</a>
+		<a href="#">Return & Exchange Policy</a>
+	  </div>
+	  <div class="col d-flex">
+		<h4>Contact us</h4>
+        <a  href="mailto:tontubd@gmail.com"><i class="fa fa-envelope" aria-hidden="true">  tontubd@gmail.com</i></a>
+        <a  href="tel:+8801621840366"><i class="fa fa-phone" aria-hidden="true">  +8801621840366</i></a>
+        
+	  </div>
+	  <div class="col d-flex">
+		<span><a href="https://www.facebook.com/profile.php?id=100089815365578"><i class='bx bxl-facebook-square bx-lg'></i></a></span>
+		<span><a href="https://www.facebook.com/profile.php?id=100089815365578"><i class='bx bxl-instagram-alt' ></i></a></span>
+		<span><a href="https://www.facebook.com/profile.php?id=100089815365578"><i class='bx bxl-twitter' ></i></a></span>
+		<span><a href="https://www.facebook.com/profile.php?id=100089815365578"><i class='bx bxl-pinterest' ></i></a></span>
+	  </div>
+	</div>
+	<hr class="my-2 bg-white"/>
+	<div class="row ">
+		<div class=" col-12 col-md">
+			<p class="d-block text-white">&copy; 2023 তন্তু</p>
+		</div>
+	</div>
+  </footer>
+
+<!--footer class="pt-4 mt-md-5 pt-md-5 border-top bg-dark">
   <div class="container">
 	<div class="row">
         <div class="col-12 col-md my-2">
@@ -440,6 +393,6 @@ th:last-child {
 		</div>
 	</div>
   </div> 
-</footer>
+</footer-->
 </body>
 </html>

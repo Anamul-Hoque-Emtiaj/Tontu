@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 <!-- Home Slider -->
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+<div>
+  <!--div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     {% for banner in banners %}
     {% if forloop.counter == 1 %}
@@ -32,12 +35,121 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-</div>
-<main class="container my-4">
+</div-->
+<!--div class="hero">
+  <div class="glide" id="glide_1">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <li class="glide__slide">
+          <div class="center">
+            <div class="left">
+              <span class="">New Inspiration 2020</span>
+              <h1 class="">NEW COLLECTION!</h1>
+              <p>Trending from men's and women's  style collection</p>
+              <a href="#" class="hero-btn">SHOP NOW</a>
+            </div>
+            <div class="right">
+                <img class="img1" src="{% static 'image/banner.png' %}" alt="">
+            </div>
+          </div>
+        </li>
+        <li class="glide__slide">
+          <div class="center">
+            <div class="left">
+              <span>New Inspiration 2020</span>
+              <h1>THE PERFECT MATCH!</h1>
+              <p>Trending from men's and women's  style collection</p>
+              <a href="#" class="hero-btn">SHOP NOW</a>
+            </div>
+            <div class="right">
+              <img class="img2" src="{% static 'image/banner.png' %}" alt="">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div-->
+<section class="section banner">
+  <div class="left">
+    <!--span class="trend">Trendy Design</span-->
+    <h1>তন্তু</h1>
+    <p>Sustainable Fashion in Dhaka
+    </p>
+    <a href="{% url 'product-list' %}" class="btn btn-1">Shop Now</a>
+  </div>
+  <div class="right">
+    <img src="{% static 'image/banner.png' %}" alt="">
+  </div>
+</section>
+  <section class="icons-container">
+
+    <div class="icons">
+        <i class="fas fa-shipping-fast"></i>
+        <div class="content">
+            <h3>free shipping</h3>
+            <p>order over $100</p>
+        </div>
+    </div>
+  
+    <div class="icons">
+        <i class="fas fa-lock"></i>
+        <div class="content">
+            <h3>secure payment</h3>
+            <p>100 secure payment</p>
+        </div>
+    </div>
+  
+    <div class="icons">
+        <i class="fas fa-redo-alt"></i>
+        <div class="content">
+            <h3>easy returns</h3>
+            <p>10 days returns</p>
+        </div>
+    </div>
+  
+    <div class="icons">
+        <i class="fas fa-headset"></i>
+        <div class="content">
+            <h3>24/7 support</h3>
+            <p>call us anytime</p>
+        </div>
+    </div>
+  
+  </section>
+
+  <h1 class="heading" id="category"> <span>Categories</span> </h1>
+  <section class="section category" >
+    <div class="cat-center">
+      {% for cat in cats %}
+      <div class="cat">
+        <a href="/category-product-list/{{cat.id}}">
+        <img src="/media/{{cat.image}}" alt="{{cat.title}}" />
+        <div>
+          <p>{{cat.title}}</p>
+        </div>
+      </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <div class="my-5"></div>
+  <section class="newsletter">
+
+    <form action="">
+        <h3>Subscribe for latest updates</h3>
+        <p>Sign up to our newsletter and save 30% for you next purchase. No spam, we promise!</p>
+        <input type="email" name="" placeholder="enter your email" id="" class="box">
+        <input type="submit" value="subscribe" class="btn">
+    </form>
+
+</section>
+<div class="my-5" id="featured"></div>
 	<!-- Featured Products -->
-	<h1 class="my-4 border-bottom pb-1">Featured Products</h1>
-	<div class="product-center container">
+	<h1 class="heading"> <span>Featured Products</span> </h1>
+	<div class="product-center container" >
     {% for product in data %}
+    {% if product.is_featured %}
 		<div class="product-item">
       <div class="overlay">
         <a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
@@ -65,8 +177,82 @@
          
 			</ul>
     </div>
+    {% endif %}
     {% endfor %}
 	</div>
-	<p class="my-4 text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm" style="font-size: 1.7rem;">All Products <i class="fa fa-long-arrow-alt-right"></i></a></p>
-</main>
+
+  <section class="deal">
+
+    <div class="content">
+        <h3>Deal of the day</h3>
+        <h1>Upto 50% off</h1>
+        <p>New Arrival <span class="color">Sale 50% OFF</span> Limited Time Offer</p>
+        <a href="{% url 'product-list' %}" class="btn">Discover now</a>
+    </div>
+
+    <div class="image">
+        <img src="{% static 'image/banner.png' %}" alt="">
+    </div>
+
+</section>
+<div class="my-5" id="arrivals"></div>
+<h1 class="heading"> <span>New Arrivals</span> </h1>
+<div class="product-center container">
+  {% for product in data %}
+  {% if product.is_featured %}
+  <div class="product-item">
+    <div class="overlay">
+      <a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
+        <img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" />
+      </a>
+      <span class="rating">NEW</span>
+    </div>
+    <div class="product-info">
+      <span>{{product.category}}</span>
+      <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
+      <h4>BDT <span class="product-price-{{product.id}}" style="font-size: 1.6rem;">{{product.productattribute_set.first.price}}</span></h4>
+    </div>
+    <ul class="icons">
+        <input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+        <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+        <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+        <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+        {% if user.is_authenticated %}
+        <li><i class="fa fa-heart add-wishlist" data-product="{{product.id}}"></i></li>
+        <li><i class="fa fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i></li>
+        {% else %}
+        <li><a href="/accounts/login"><i class="fa fa-heart "></i></a></li>
+        <li><a href="/accounts/login"><i class="fa fa-shopping-cart" ></i></a></li>
+        {% endif %}
+       
+    </ul>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+  <!--div class="popup hide-popup">
+    <div class="popup-content">
+      <div class="popup-close">
+        <i class='bx bx-x'></i>
+      </div>
+      <div class="popup-left">
+        <div class="popup-img-container">
+          <img class="popup-img" src="{% static 'image/popup.jpg' %}" alt="popup">
+        </div>
+      </div>
+      <div class="popup-right">
+        <div class="right-content">
+          <h1>Get Discount <span>50%</span> Off</h1>
+          <p>Sign up to our newsletter and save 30% for you next purchase. No spam, we promise!
+          </p>
+          <form action="#">
+            <input type="email" placeholder="Enter your email..." class="popup-form">
+            <a href="#">Subscribe</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div-->
+	<!--p class="my-4 text-center"><a href="{% url 'product-list' %}" class="btn btn-dark btn-sm" style="font-size: 1.7rem;">All Products <i class="fa fa-long-arrow-alt-right"></i></a></p-->
+</div>
 {% endblock %}

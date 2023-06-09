@@ -12,8 +12,15 @@ from django.contrib.auth.decorators import login_required
 # Home Page
 def home(request):
 	banners=Banner.objects.all().order_by('-id')
-	data=Product.objects.filter(is_featured=True).order_by('-id')
-	return render(request,'index.html',{'data':data,'banners':banners})
+	data=Product.objects.order_by('-id')
+	cats=Category.objects.all().order_by('-id')
+	return render(request,'index.html',{'data':data,'banners':banners,'cats':cats})
+
+def test(request):
+	banners=Banner.objects.all().order_by('-id')
+	data=Product.objects.order_by('-id')
+	cats=Category.objects.all().order_by('-id')
+	return render(request,'base_core.html',{'data':data,'banners':banners,'cats':cats})
 
 def error_404(request, exception):
 	return render(request,'error.html',{'msg':'page_not_found','code':404})
