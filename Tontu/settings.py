@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'mathfilters',
     'Main.apps.MainConfig',
     'jet.dashboard',
     'jet',

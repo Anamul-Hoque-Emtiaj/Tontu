@@ -7,11 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>তন্তু</title> 
 
-  
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <!-- font awesome cdn link  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'custom.js' %}"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -19,9 +25,10 @@
 		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
 
 :root{
+    --white: #fff;
     --green:#27ae60;
     --dark-color:#219150;
-    --black:#444;
+    --black:#222;
     --light-color:#666;
     --border:.1rem solid rgba(0,0,0,.1);
     --border-hover:.1rem solid var(--black);
@@ -163,6 +170,7 @@ section{
 .header .header-1 .icons div:hover,
 .header .header-1 .icons a:hover{
     color:var(--green);
+    text-decoration: none;
 }
 
 #search-btn{
@@ -173,19 +181,20 @@ section{
     background:var(--green);
 }
 
-.header .header-2 .navbar{
+.header .header-2 .my-navbar{
     text-align: center;
 }
 
-.header .header-2 .navbar a{
+.header .header-2 .my-navbar a{
     color:#fff;
     display: inline-block;
     padding:1.2rem;
     font-size: 1.7rem;
 }
 
-.header .header-2 .navbar a:hover{
+.header .header-2 .my-navbar a:hover{
     background:var(--dark-color);
+    text-decoration: none;
 }
 
 .header .header-2.active{
@@ -212,94 +221,7 @@ section{
 
 .bottom-navbar a:hover{
     background:var(--dark-color);
-}
-
-.login-form-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:rgba(255,255,255,.9);
-    position:fixed;
-    top:0; right:-105%;
-    z-index: 10000;
-    height:100%;
-    width:100%;
-}
-
-.login-form-container.active{
-    right:0;
-}
-
-.login-form-container form{
-    background:#fff;
-    border:var(--border);
-    width:40rem;
-    padding:2rem;
-    box-shadow: var(--box-shadow);
-    border-radius: .5rem;
-    margin:2rem;
-}
-
-.login-form-container form h3{
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    color:var(--black);
-    text-align: center;
-}
-
-.login-form-container form span{
-    display: block;
-    font-size: 1.5rem;
-    padding-top: 1rem;
-}
-
-.login-form-container form .box{
-    width: 100%;
-    margin:.7rem 0;
-    font-size: 1.6rem;
-    border:var(--border);
-    border-radius: .5rem;
-    padding:1rem 1.2rem;
-    color:var(--black);
-    text-transform: none;
-}
-
-.login-form-container form .checkbox{
-    display:flex;
-    align-items: center;
-    gap:.5rem;
-    padding:1rem 0;
-}
-
-.login-form-container form .checkbox label{
-    font-size: 1.5rem;
-    color:var(--light-color);
-    cursor: pointer;
-}
-
-.login-form-container form .btn{
-    text-align: center;
-    width:100%;
-    margin:1.5rem 0;
-}
-
-.login-form-container form p{
-    padding-top: .8rem;
-    color:var(--light-color);
-    font-size: 1.5rem;
-}
-
-.login-form-container form p a{
-    color:var(--green);
-    text-decoration: underline;
-}
-
-.login-form-container #close-login-btn{
-    position: absolute;
-    top:1.5rem; right:2.5rem;
-    font-size: 5rem;
-    color:var(--black);
-    cursor: pointer;
+    text-decoration: none;
 }
 
 .home{
@@ -512,6 +434,7 @@ section{
 
 .arrivals .arrivals-slider .box:hover{
     border:var(--border-hover);
+    text-decoration: none;
 }
 
 .arrivals .arrivals-slider .box .image img{
@@ -578,45 +501,6 @@ section{
     line-height: 2;
 }
 
-.reviews .reviews-slider .box{
-    border:var(--border);
-    padding:2rem;
-    text-align: center;
-    margin:2rem 0;
-}
-
-.reviews .reviews-slider .box:hover{
-    border:var(--border-hover);
-}
-
-.reviews .reviews-slider .box img{
-    height:7rem;
-    width:7rem;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.reviews .reviews-slider .box h3{
-    color:var(--black);
-    font-size: 2.2rem;
-    padding:.5rem 0;
-}
-
-.reviews .reviews-slider .box p{
-    color:var(--light-color);
-    font-size: 1.4rem;
-    padding:1rem 0;
-    line-height: 2;
-}
-
-.reviews .reviews-slider .box .stars{
-    padding-top: .5rem;
-}
-
-.reviews .reviews-slider .box .stars i{
-    font-size: 1.7rem;
-    color:var(--green);
-}
 
 .blogs .blogs-slider .box{
     margin:2rem 0;
@@ -658,100 +542,6 @@ section{
     padding:1rem 0;
     line-height: 2;
 }
-
-.footer .box-container{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-    gap:1.5rem;
-}
-
-.footer .box-container .box h3{
-    font-size: 2.2rem;
-    color:var(--black);
-    padding:1rem 0;
-}
-
-.footer .box-container .box a{
-    display: block;
-    font-size: 1.4rem;
-    color:var(--light-color);
-    padding:1rem 0;
-}
-
-.footer .box-container .box a i{
-    color:var(--green);
-    padding-right: .5rem;
-}
-
-.footer .box-container .box a:hover i{
-    padding-right: 2rem;
-}
-
-.footer .box-container .box .map{
-    width:100%;
-}
-
-.footer .share{
-    padding:1rem 0;
-    text-align: center;
-}
-
-.footer .share a{
-    height: 5rem;
-    width: 5rem;
-    line-height: 5rem;
-    font-size: 2rem;
-    color:#fff;
-    background:var(--green);
-    margin:0 .3rem;
-    border-radius: 50%; 
-}
-
-.footer .share a:hover{
-    background:var(--black);
-}
-
-.footer .credit{
-    border-top: var(--border);
-    margin-top: 2rem;
-    padding:0 1rem;
-    padding-top: 2.5rem;
-    font-size: 2rem;
-    color:var(--light-color);
-    text-align: center;
-}
-
-.footer .credit span{
-    color:var(--green);
-}
-
-.loader-container{
-    position: fixed;
-    top:0; left: 0;
-    height:100%;
-    width: 100%;
-    z-index: 10000;
-    background:#f7f7f7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.loader-container.active{
-    display: none;
-}
-
-.loader-container img{
-    height:10rem;
-}
-
-
-
-
-
-
-
-
 
 
 /* media queries  */
@@ -836,8 +626,84 @@ section{
     }
 
 }
+
+
+/* Footer */
+.footer {
+    background-color: var(--black);
+}
+.footer .box-container{
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap:1.5rem;
+}
+
+.footer .box-container .box h3{
+    font-size: 2.2rem;
+    color:var(--white);
+    padding:1rem 0;
+}
+
+.footer .box-container .box a{
+    display: block;
+    font-size: 1.4rem;
+    color:var(--white);
+    padding:1rem 0;
+}
+
+.footer .box-container .box a i{
+    color:var(--green);
+    padding-right: .5rem;
+}
+
+.footer .box-container .box a:hover i{
+    padding-right: 2rem;
+    text-decoration: none;
+}
+
+.footer .box-container .box .map{
+    width:100%;
+}
+
+.footer .share{
+    padding:1rem 0;
+    text-align: center;
+}
+
+.footer .share a{
+    height: 5rem;
+    width: 5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    color:#fff;
+    background:var(--green);
+    margin:0 .3rem;
+    border-radius: 50%; 
+}
+
+.footer .share a:hover{
+    background:var(--green);
+    text-decoration: none;
+}
+
+.footer .credit{
+    border-top: var(--border);
+    margin-top: 2rem;
+    padding:0 1rem;
+    padding-top: 2.5rem;
+    font-size: 2rem;
+    color:var(--white);
+    text-align: center;
+}
+
+.footer .credit span{
+    color:var(--green);
+}
+
+
 				
-	</style>
+</style>
 
 <header class="header">
 
@@ -854,13 +720,13 @@ section{
           <div id="search-btn" class="fas fa-search"></div>
           <a href="#" class="fas fa-heart"></a>
           <a href="#" class="fas fa-shopping-cart"></a>
-          <div id="login-btn" class="fas fa-user"></div>
+          <a href="#" class="fas fa-user"></a>
       </div>
 
   </div>
 
   <div class="header-2">
-      <nav class="navbar">
+      <nav class="my-navbar">
           <a href="#home">home</a>
           <a href="#featured">featured</a>
           <a href="#arrivals">arrivals</a>
@@ -883,28 +749,6 @@ section{
   <a href="#blogs" class="fas fa-blog"></a>
 </nav>
 
-<!-- login form  -->
-
-<div class="login-form-container">
-
-  <div id="close-login-btn" class="fas fa-times"></div>
-
-  <form action="">
-      <h3>sign in</h3>
-      <span>username</span>
-      <input type="email" name="" class="box" placeholder="enter your email" id="">
-      <span>password</span>
-      <input type="password" name="" class="box" placeholder="enter your password" id="">
-      <div class="checkbox">
-          <input type="checkbox" name="" id="remember-me">
-          <label for="remember-me"> remember me</label>
-      </div>
-      <input type="submit" value="sign in" class="btn">
-      <p>forget password ? <a href="#">click here</a></p>
-      <p>don't have an account ? <a href="#">create one</a></p>
-  </form>
-
-</div>
 
 <!-- home section starts  -->
 
@@ -1275,11 +1119,39 @@ section{
 
 <!-- deal section ends -->
 
-<!-- loader  -->
+<section class="footer">
 
-<div class="loader-container">
-  <img src="{% static 'image/loader-img.gif' %}" alt="">
-</div>
+    <div class="box-container">
+
+        <div class="box">
+            <h3>INFORMATION</h3>
+            <a href="{% url 'about-us' %}"> <i></i> About-Us </a>
+            <a href="#"> <i></i>  Term & Conditions </a>
+            <a href="#"> <i></i> privacy policy </a>
+            <a href="#"> <i></i> Return & Exchange Policy </a>
+        </div>
+
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="tel:+8801621840366"> <i class="fas fa-phone"></i> 8801621840366 </a>
+            <a href="mailto:tontubd@gmail.com"> <i class="fas fa-envelope"></i> tontubd@gmail.com </a>
+        </div>
+        
+    </div>
+
+    <div class="share">
+        <a href="href="https://www.facebook.com/profile.php?id=100089815365578"" class="fab fa-facebook-f"></a>
+        <a href="#" class="fab fa-twitter"></a>
+        <a href="#" class="fab fa-instagram"></a>
+        <a href="#" class="fab fa-linkedin"></a>
+        <a href="#" class="fab fa-pinterest"></a>
+    </div>
+
+    <div class="credit">  <span>Tontu</span> | all rights reserved! </div>
+
+</section>
+
+
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
   <script>
@@ -1289,15 +1161,6 @@ document.querySelector('#search-btn').onclick = () =>{
   searchForm.classList.toggle('active');
 }
 
-let loginForm = document.querySelector('.login-form-container');
-
-document.querySelector('#login-btn').onclick = () =>{
-  loginForm.classList.toggle('active');
-}
-
-document.querySelector('#close-login-btn').onclick = () =>{
-  loginForm.classList.remove('active');
-}
 
 window.onscroll = () =>{
 
@@ -1321,14 +1184,6 @@ window.onload = () =>{
 
   fadeOut();
 
-}
-
-function loader(){
-  document.querySelector('.loader-container').classList.add('active');
-}
-
-function fadeOut(){
-  setTimeout(loader, 4000);
 }
 
 var swiper = new Swiper(".books-slider", {
@@ -1385,6 +1240,28 @@ var swiper = new Swiper(".arrivals-slider", {
   centeredSlides: true,
   autoplay: {
     delay: 2500,
+    disableOnInteraction: false,
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 3,
+    },
+  },
+});
+
+var swiper = new Swiper(".blogs-slider", {
+  spaceBetween: 10,
+  grabCursor:true,
+  loop:true,
+  centeredSlides: true,
+  autoplay: {
+    delay: 9500,
     disableOnInteraction: false,
   },
   breakpoints: {

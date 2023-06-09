@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse,HttpResponse
-from .models import Banner,Category,Product,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook
+from .models import Banner,Category,Product,ProductAttribute,CartOrder,CartOrderItems,ProductReview,Wishlist,UserAddressBook,Subscriber
 from django.contrib.auth.models import User
 from django.db.models import Max,Min,Count,Avg
 from django.db.models.functions import ExtractMonth
@@ -15,6 +15,13 @@ def home(request):
 	data=Product.objects.order_by('-id')
 	cats=Category.objects.all().order_by('-id')
 	return render(request,'index.html',{'data':data,'banners':banners,'cats':cats})
+
+def subscribe(request):
+	if request.method=='POST':
+		email = request.POST['email']
+		nothing = Subscriber.objects.create(email=email)
+	return redirect('home')
+
 
 def test(request):
 	banners=Banner.objects.all().order_by('-id')

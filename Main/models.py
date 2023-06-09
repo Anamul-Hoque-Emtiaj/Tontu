@@ -64,6 +64,8 @@ class Product(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     status=models.BooleanField(default=True)
     is_featured=models.BooleanField(default=True)
+    is_banner=models.BooleanField(default=True)
+    is_new=models.BooleanField(default=True)
     rating = models.DecimalField(null=True,max_digits=5, decimal_places=2)
     review = models.IntegerField(default=0)
     discount = models.DecimalField(default=20,max_digits=5, decimal_places=2)
@@ -162,6 +164,15 @@ class Wishlist(models.Model):
 
     class Meta:
         verbose_name_plural='11. Wishlist'
+
+
+# Subscriber
+class Subscriber(models.Model):
+    email=models.EmailField(null=False)
+    date=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural='13. Subscriber'
 
 
 

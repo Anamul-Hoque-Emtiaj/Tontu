@@ -1,6 +1,147 @@
 {% extends 'base.html' %}
+{% load mathfilters %}
 {% load static %}
 {% block content %}
+<style>
+	.container {
+		max-width: 130rem;
+		margin: 0 auto;
+		padding: 0 3rem;
+	}
+	/* Product Details */
+.product-detail .details {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 7rem;
+}
+
+.product-detail .left {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-detail .left .main {
+  text-align: center;
+  background-color: #f6f2f1;
+  margin-bottom: 2rem;
+  height: 45rem;
+}
+
+.product-detail .left .main img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.product-detail .right span {
+  display: inline-block;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.product-detail .right h1 {
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+.product-detail .right .price {
+  font-size: 600;
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 2rem;
+}
+
+.product-detail .right div {
+  display: inline-block;
+  position: relative;
+  z-index: -1;
+}
+
+.product-detail .right select {
+  font-family: 'Poppins', sans-serif;
+  width: 20rem;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  appearance: none;
+  outline: none;
+}
+
+.product-detail form {
+  margin-bottom: 2rem;
+  z-index: 0;
+}
+
+.product-detail form span {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  z-index: 0;
+}
+
+.product-detail .form {
+  margin-bottom: 3rem;
+}
+
+.product-detail .form input {
+  padding: 0.8rem;
+  text-align: center;
+  width: 3.5rem;
+  margin-right: 2rem;
+}
+
+.product-detail .form .addCart {
+  background: var(--green);
+  padding: 0.8rem 4rem;
+  color: #fff;
+  border-radius: 3rem;
+}
+
+.product-detail h3 {
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  background-color: var(--white);
+  color: var(--black);
+  font-weight: 400;
+  font-style: normal;
+}
+@media only screen and (max-width: 996px) {
+  .product-detail .left {
+    width: 30rem;
+    height: 45rem;
+  }
+
+  .product-detail .details {
+    gap: 3rem;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .product-detail .details {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail .right {
+    margin-top: 1rem;
+  }
+
+  .product-detail .left {
+    width: 100%;
+    height: 45rem;
+  }
+
+  .product-detail .details {
+    gap: 3rem;
+  }
+}
+
+</style>
 <main class="container my-4">
 	<h1 class="my-4 border-bottom pb-1">Product Details</h1>
 	<div class="row">
@@ -8,6 +149,7 @@
 			<img id="zoom_01" data-zoom-image="/media/{{data.productattribute_set.first.image}}" src="/media/{{data.productattribute_set.first.image}}" class="card-img-top" alt="{{data.title}}">
 		</div>
 		<div class="col-md-8">
+			<div class="my-5"></div>
 			<table class="table table-bordered">
 				<tr>
 					<td>Product Name</td>
@@ -29,19 +171,19 @@
 			<hr/>
 			
 			<div class="input-group my-3" >
-			    <input type="number" value="1" class="form-control m-2 product-qty-{{data.id}}" id="productQty" style="font-size: 1.6rem;"/>
+			    <input type="number" value="1" class="form-control m-2 product-qty-{{data.id}}" id="productQty" style="font-size: 1.8rem;" />
 				{% if user.is_authenticated %}
 				<input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
 		        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
 		        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
 				<div class="d-flex">
-					<button class="btn btn-primary btn-sm add-to-cart m-2" data-index="{{data.id}}" type="button" id="addToCartBtn" style="font-size: 1.6rem;"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-					<button class="btn btn-sm btn-danger add-wishlist m-2" data-product="{{data.id}}"style="font-size: 1.6rem;"><i class="fa fa-heart" ></i> WishList</button>
+					<button class="btn m-2  add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn" ><i class="fa fa-shopping-cart"></i> </button>
+					<button class="btn m-2  add-wishlist" data-product="{{data.id}}"><i class="fa fa-heart" ></i> </button>
 				</div>
 				{% else %}
 				<div class="d-flex">
-					<a href="/accounts/login"><button class="btn btn-primary px-1 m-2" style="font-size: 1.6rem;"><i class="fa fa-shopping-cart" ></i> Add to Cart</button></a>
-					<a href="/accounts/login"><button class="btn btn-sm btn-danger m-2" style="font-size: 1.6rem;"><i class="fa fa-heart" ></i> WishList</button></a>
+					<a href="/accounts/login"><button class="btn m-2 " ><i class="fa fa-shopping-cart" ></i> </button></a>
+					<a href="/accounts/login"><button class="btn m-2 " ><i class="fa fa-heart" ></i> </button></a>
 				</div>
 				{% endif %}
 			</div>
@@ -50,7 +192,7 @@
 	<hr />
 	<div class="row">
 		<div class="col-md-6">
-			<h2 class="my-3">Detail</h2>
+			<h2 class="my-3">Details</h2>
 			<table class="table table-bordered">
 				<tr>
 					<td>Category</td>
@@ -72,11 +214,11 @@
 			<p>{{data.detail}}</p>
 		</div>
 		<!-- Reviews -->
-		<div class="col-md-6">
-			<h2 class="my-3">Reviews - <span class="avg-rating">{{avg_reviews.avg_rating}}</span>/5 <i class="fa fa-star text-warning"></i>
+		<div class="col-md-6 my-5">
+			<h2 class="">Reviews - <span class="avg-rating">{{avg_reviews.avg_rating}}</span>/5 <i class="fa fa-star text-warning"></i>
 				{% if user.is_authenticated %}
 				{% if canAdd %}
-				<button data-toggle="modal" data-target="#productReview" type="button" class="btn btn-warning btn-sm float-right reviewBtn" style="font-size: 1.6rem;">Add Review</button>
+				<button data-toggle="modal" data-target="#productReview" type="button" class="btn reviewBtn" >Add Review</button>
 				{% endif %}
 				{% endif %}
 			</h2>
@@ -108,8 +250,8 @@
 								<option value="5" selected>5</option>
 							</select>
 						</div>
-						<button type="submit" class="btn btn-primary" style="font-size: 1.5rem;">Submit</button>
-						<input type="reset" class="btn btn-dark" value="Reset" id="reset" style="font-size: 1.5rem;"/>
+						<button type="submit" class="btn btn-primary mx-2" style="font-size: 1.5rem;">Submit</button>
+						<input type="reset" class="btn btn-dark mx-2" value="Reset" id="reset" style="font-size: 1.5rem;"/>
 						<p class="ajaxRes"></p>
 				</form>
 				</div>
@@ -142,38 +284,29 @@
 			</div>
 		</div>
 	</div>
-	<!-- Related Products -->
-	<h2 class="mt-4 mb-3 border-bottom pb-1">Related Products</h2>
-	{% for product in related %}
-	<div class="product-item">
-	<div class="overlay">
-	<a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
-				<img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" />
-			</a>
-			<span class="rating">-{{product.discount}}%</span>
-		</div>
-	<div class="product-info">
-			<span>{{product.category}}</span>
-			<a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
-			<h4>BDT <span class="product-price-{{product.id}}" style="font-size: 1.6rem;">{{product.productattribute_set.first.price}}</span></h4>
-		</div>
-		<ul class="icons">
-		<input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
-		<input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
-		<input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
-		<input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
-		{% if user.is_authenticated %}
-		<li><i class="fa fa-heart add-wishlist" data-product="{{product.id}}"></i></li>
-		<li><i class="fa fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i></li>
-		{% else %}
-		<li><a href="/accounts/login"><i class="fa fa-heart "></i></a></li>
-		<li><a href="/accounts/login"><i class="fa fa-shopping-cart" ></i></a></li>
-		{% endif %}
-		
-		</ul>
-</div>
-{% endfor %}
 </main>
+<!-- Related Products -->
+<section class="arrivals" id="arrivals">
+
+	<h1 class="heading"> <span>Related Products</span> </h1>
+  
+	<div class="swiper arrivals-slider">
+  
+		<div class="swiper-wrapper">
+			{% for product in related %}
+			<a href="/product/{{product.slug}}/{{product.id}}" class="swiper-slide box">
+				<div class="image">
+					<img src="/media/{{product.productattribute_set.first.image}}" alt="">
+				</div>
+				<div class="content">
+					<h3>{{product.title}}</h3>
+					<div class="price">BDT {{product.productattribute_set.first.price|sub:product.discount}} <span>{{product.productattribute_set.first.price}}</span></div>
+				</div>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+</section>
 <!-- Image Zoom -->
 <script src="{% static 'jquery.ez-plus.js' %}"></script>
 <script type="text/javascript">

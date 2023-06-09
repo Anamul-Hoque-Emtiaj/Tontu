@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+	.container {
+		max-width: 130rem;
+		margin: 0 auto;
+		padding: 0 3rem;
+	}
+	body {
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.6rem;
+		background-color: var(--white);
+		color: var(--black);
+		font-weight: 400;
+		font-style: normal;
+		}
+</style>
 <main class="container my-4">
 
 	<div style="padding-top: 100px;"></div>
@@ -14,7 +29,7 @@
 				<div class="alert alert-danger p-5" >{{error}}</div>
 				{% endif %}
 				<div class="form-group">
-					<label for="email">UserName</label>
+					<label for="email">Username</label>
 					<input type="text" class="form-control" style="font-size: 1.6rem;" name="username"  id="username"  placeholder="Enter UserName" required>
 				</div>
 				<div class="form-group">
