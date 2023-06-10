@@ -2,146 +2,7 @@
 {% load mathfilters %}
 {% load static %}
 {% block content %}
-<style>
-	.container {
-		max-width: 130rem;
-		margin: 0 auto;
-		padding: 0 3rem;
-	}
-	/* Product Details */
-.product-detail .details {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 7rem;
-}
 
-.product-detail .left {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-detail .left .main {
-  text-align: center;
-  background-color: #f6f2f1;
-  margin-bottom: 2rem;
-  height: 45rem;
-}
-
-.product-detail .left .main img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-}
-
-.product-detail .right span {
-  display: inline-block;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.product-detail .right h1 {
-  font-size: 4rem;
-  line-height: 1.2;
-  margin-bottom: 2rem;
-}
-
-.product-detail .right .price {
-  font-size: 600;
-  font-size: 2rem;
-  color: var(--green);
-  margin-bottom: 2rem;
-}
-
-.product-detail .right div {
-  display: inline-block;
-  position: relative;
-  z-index: -1;
-}
-
-.product-detail .right select {
-  font-family: 'Poppins', sans-serif;
-  width: 20rem;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  appearance: none;
-  outline: none;
-}
-
-.product-detail form {
-  margin-bottom: 2rem;
-  z-index: 0;
-}
-
-.product-detail form span {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  z-index: 0;
-}
-
-.product-detail .form {
-  margin-bottom: 3rem;
-}
-
-.product-detail .form input {
-  padding: 0.8rem;
-  text-align: center;
-  width: 3.5rem;
-  margin-right: 2rem;
-}
-
-.product-detail .form .addCart {
-  background: var(--green);
-  padding: 0.8rem 4rem;
-  color: #fff;
-  border-radius: 3rem;
-}
-
-.product-detail h3 {
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-}
-body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.6rem;
-  background-color: var(--white);
-  color: var(--black);
-  font-weight: 400;
-  font-style: normal;
-}
-@media only screen and (max-width: 996px) {
-  .product-detail .left {
-    width: 30rem;
-    height: 45rem;
-  }
-
-  .product-detail .details {
-    gap: 3rem;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  .product-detail .details {
-    grid-template-columns: 1fr;
-  }
-
-  .product-detail .right {
-    margin-top: 1rem;
-  }
-
-  .product-detail .left {
-    width: 100%;
-    height: 45rem;
-  }
-
-  .product-detail .details {
-    gap: 3rem;
-  }
-}
-
-</style>
 <main class="container my-4">
 	<h1 class="my-4 border-bottom pb-1">Product Details</h1>
 	<div class="row">
@@ -165,7 +26,15 @@ body {
 				</tr>
 				<tr>
 					<td>Price</td>
-					<td>BDT <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></td>
+					<td>BDT <span>{{data.productattribute_set.first.price}}</span></td>
+				</tr>
+				<tr>
+					<td>Discount</td>
+					<td>- <span >{{data.discount}}</span></td>
+				</tr>
+				<tr>
+					<td>Discounted Price</td>
+					<td>BDT <span>{{data.productattribute_set.first.price|sub:data.discount}}</span></td>
 				</tr>
 			</table>
 			<hr/>
@@ -176,6 +45,7 @@ body {
 				<input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
 		        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
 		        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+				<input type="hidden" class="product-price-{{data.id}}" value="{{data.productattribute_set.first.price|sub:data.discount}}" />
 				<div class="d-flex">
 					<button class="btn m-2  add-to-cart" data-index="{{data.id}}" type="button" id="addToCartBtn" ><i class="fa fa-shopping-cart"></i> </button>
 					<button class="btn m-2  add-wishlist" data-product="{{data.id}}"><i class="fa fa-heart" ></i> </button>

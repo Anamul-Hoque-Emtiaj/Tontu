@@ -1,184 +1,8 @@
 {% extends 'base.html' %}
+{% load mathfilters %}
 {% load static %}
 {% block content %}
-<style>
-	.container {
-		max-width: 130rem;
-		margin: 0 auto;
-		padding: 0 3rem;
-	}
-	.product-center {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-wrap: wrap;
-		max-width: 120rem;
-		margin: 0 auto;
-		padding: 0 2rem;
-		}
 
-		.product-item {
-		position: relative;
-		width: 27rem;
-		margin: 0 auto;
-		margin-bottom: 3rem;
-		}
-
-		.product-thumb img {
-		width: 100%;
-		height: 31rem;
-		object-fit: cover;
-		transition: all 500ms linear;
-		}
-
-		.product-info {
-		padding: 1rem;
-		text-align: center;
-		}
-
-		.product-info span {
-		display: inline-block;
-		font-size: 1.2rem;
-		color: #666;
-		margin-bottom: 1rem;
-		}
-
-		.product-info a {
-		font-size: 1.5rem;
-		display: block;
-		margin-bottom: 1rem;
-		transition: all 300ms ease;
-		}
-
-		.product-info a:hover {
-		color: var(--green);
-		}
-
-		.product-item .icons {
-		position: absolute;
-		left: 50%;
-		top: 35%;
-		transform: translateX(-50%);
-		display: flex;
-		align-items: center;
-		}
-
-		.product-item .icons li {
-		background-color: var(--white);
-		text-align: center;
-		padding: 1rem 1.5rem;
-		font-size: 2.3rem;
-		cursor: pointer;
-		transition: 300ms ease-out;
-		transform: translateY(20px);
-		visibility: hidden;
-		opacity: 0;
-		}
-
-		.product-item .icons li:first-child {
-		transition-delay: 0.1s;
-		}
-
-		.product-item .icons li:nth-child(2) {
-		transition-delay: 0.2s;
-		}
-
-		.product-item .icons li:nth-child(3) {
-		transition-delay: 0.3s;
-		}
-
-		.product-item:hover .icons li {
-		visibility: visible;
-		opacity: 1;
-		transform: translateY(0);
-		}
-
-		.product-item .icons li:not(:last-child) {
-		margin-right: 0.5rem;
-		}
-
-		.product-item .icons li:hover {
-		background-color: var(--green);
-		color: var(--white);
-		}
-
-		.product-item .overlay {
-		position: relative;
-		overflow: hidden;
-		cursor: pointer;
-		width: 100%;
-		}
-
-		.product-item .overlay::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		visibility: hidden;
-		opacity: 0;
-		transition: 300ms ease-out;
-		}
-
-		.product-item:hover .overlay::after {
-		visibility: visible;
-		opacity: 1;
-		}
-
-		.product-item:hover .product-thumb img {
-		transform: scale(1.1);
-		}
-
-		.product-item .discount {
-		position: absolute;
-		top: 1rem;
-		left: 1rem;
-		background-color: var(--green);
-		padding: 0.5rem 1rem;
-		color: var(--white);
-		border-radius: 2rem;
-		font-size: 1.5rem;
-		}
-
-		.product-item .rating {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		background-color: var(--green);
-		padding: 0.5rem 1rem;
-		color: var(--white);
-		border-radius: 2rem;
-		font-size: 1.5rem;
-		}
-
-		@media only screen and (max-width: 567px) {
-		.product-center {
-			max-width: 100%;
-			padding: 0 1rem;
-		}
-
-		.product-item {
-			width: 40%;
-			margin-bottom: 3rem;
-		}
-
-		.product-thumb img {
-			height: 20rem;
-		}
-
-		.product-item {
-			margin-right: 2rem;
-		}
-
-		.product-item .icons li {
-			padding: 0.5rem 1rem;
-			font-size: 1.8rem;
-		}
-		}
-
-</style>
 <main class="container my-4">
 	<div class="row">
 		<!-- Filters -->
@@ -196,29 +20,28 @@
 					  <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
 					  <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
 					  <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+					  <input type="hidden" class="product-price-{{product.id}}" value="{{product.productattribute_set.first.price|sub:product.discount}}" />
 					<div class="product-item">
 				  <div class="overlay">
 					<a href="/product/{{product.slug}}/{{product.id}}" class="product-thumb">
 							  <img src="/media/{{product.productattribute_set.first.image}}" class="card-img-top" alt="{{product.title}}" />
 							</a>
-							<span class="rating">-{{product.discount}}%</span>
+							<span class="rating">-{{product.discount}}</span>
 						</div>
 				  <div class="product-info">
-							<span>{{product.category}}</span>
+					<div class="price">BDT {{product.productattribute_set.first.price|sub:product.discount}} <span >{{product.productattribute_set.first.price}}</span></div>
 							<a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
-							<h4>BDT <span class="product-price-{{product.id}}" style="font-size: 1.6rem;">{{product.productattribute_set.first.price}}</span></h4>
 						</div>
-						<ul class="icons">
-					  
-					  {% if user.is_authenticated %}
-					  <li><i class="fa fa-heart add-wishlist" data-product="{{product.id}}"></i></li>
-					  <li><i class="fa fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i></li>
-					  {% else %}
-						<li><a href="/accounts/login"><i class="fa fa-heart "></i></a></li>
-						<li><a href="/accounts/login"><i class="fa fa-shopping-cart" ></i></a></li>
-						{% endif %}
-					 
-						</ul>
+						<div class="icons">
+						
+							{% if user.is_authenticated %}
+								<i class="fas fa-heart add-wishlist mx-2" data-product="{{product.id}}"></i>
+								<i class="fas fa-shopping-cart add-to-cart" data-index="{{product.id}}"></i>
+							{% else %}
+								<a href="/accounts/login"><i class="fas fa-heart mx-2"></i></a>
+								<a href="/accounts/login"><i class="fas fa-shopping-cart" ></i></a>
+							{% endif %}
+						</div>
 				</div>
 				{% endfor %}
 				</div>

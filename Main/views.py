@@ -108,9 +108,12 @@ def product_detail(request,slug,id):
 
 # Search
 def search(request):
-	q=request.GET['q']
-	data=Product.objects.filter(title__icontains=q).order_by('-id')
-	return render(request,'search.html',{'data':data})
+	if request.method=='POST':
+		q=request.POST['q']
+		data=Product.objects.filter(title__icontains=q).order_by('-id')
+		print(request.POST['q'])
+		return render(request,'search.html',{'data':data})
+	return redirect('home')
 
 # Filter Data
 def filter_data(request):
@@ -143,12 +146,15 @@ def add_to_cart(request):
 	if not request.user.is_authenticated:
 		return redirect('/accounts/login/')
 	# del request.session['cartdata']
+	product=Product.objects.get(id=request.GET['id'])
+	discount = Product.objects.filter(id=request.GET['id']).values('discount')[0]['discount']
+	price = int(ProductAttribute.objects.filter(product=product).values('price')[0]['price'])-int(discount)
 	cart_p={}
 	cart_p[str(request.GET['id'])]={
 		'image':request.GET['image'],
 		'title':request.GET['title'],
 		'qty':request.GET['qty'],
-		'price':request.GET['price'],
+		'price':price,
 	}
 	print(cart_p)
 	if 'cartdata' in request.session:
@@ -168,6 +174,7 @@ def add_to_cart(request):
 # Cart List Page
 @login_required
 def cart_list(request):
+	print(request.session['cartdata'])
 	total_amt=0
 	if 'cartdata' in request.session:
 		for p_id,item in request.session['cartdata'].items():

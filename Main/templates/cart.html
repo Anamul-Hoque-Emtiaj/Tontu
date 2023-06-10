@@ -1,92 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<style>
-	.container {
-		max-width: 114rem;
-		margin: 0 auto;
-		padding: 0 3rem;
-	}
-	/* Cart Items */
-		.cart {
-		margin: 10rem auto;
-		}
-
-		table {
-		width: 100%;
-		border-collapse: collapse;
-		}
-
-		.cart-info {
-		display: flex;
-		flex-wrap: wrap;
-		}
-
-		th {
-		text-align: left;
-		padding: 0.5rem;
-		color: #fff;
-		background-color: var(--green);
-		font-weight: normal;
-		}
-
-		td {
-		padding: 1rem 0.5rem;
-		}
-
-		td input {
-		width: 5rem;
-		height: 3rem;
-		padding: 0.5rem;
-		}
-
-		td a {
-		color: orangered;
-		font-size: 1.4rem;
-		}
-
-		td img {
-		width: 8rem;
-		height: 8rem;
-		margin-right: 1rem;
-		}
-
-		.total-price {
-		display: flex;
-		align-items: flex-end;
-		flex-direction: column;
-		margin-top: 2rem;
-		}
-
-		.total-price table {
-		border-top: 3px solid var(--green);
-		width: 100%;
-		max-width: 35rem;
-		}
-
-		td:last-child {
-		text-align: right;
-		}
-
-		th:last-child {
-		text-align: right;
-		}
-
-		.checkout {
-		display: inline-block;
-		background-color: var(--green);
-		color: white;
-		padding: 1rem;
-		margin-top: 1rem;
-		}
-
-		@media only screen and (max-width: 567px) {
-		.cart-info p {
-			display: none;
-		}
-		}
-
-</style>
 
 <main class="container my-4" id="cartList">
 	
@@ -112,9 +26,9 @@
 				</td>
 				<td>
 					<div class="cart-info">
-						<input type="number" min="1" class="product-qty-{{product_id}} m-1" style="font-size: 1.55rem;" value="{{item.qty}}"  />
-						<button class="btn btn-sm btn-primary update-item m-1" style="font-size: 1.5rem;" data-item="{{product_id}}"><i class="fa fa-sync"></i></button>
-						<button class="btn btn-sm btn-danger delete-item m-1" style="font-size: 1.5rem;" data-item="{{product_id}}"><i class="fa fa-trash"></i></button>
+						<input type="number" min="1" class="product-qty-{{product_id}} m-1"  value="{{item.qty}}"  />
+						<button class=" update-item mx-2"  data-item="{{product_id}}"><i class="fa fa-sync"></i></button>
+						<button class=" delete-item"  data-item="{{product_id}}"><i class="fa fa-trash"></i></button>
 					</div>
 					
 				</td>

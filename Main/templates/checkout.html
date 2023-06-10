@@ -1,19 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<style>
-	.container {
-		max-width: 130rem;
-		margin: 0 auto;
-		padding: 0 3rem;
-	}
-</style
 <main class="container my-4" id="cartList">
 	<!-- Featured Products -->
 	<div class="row">
 		<div class="col-md-8">
 			<h1 class="my-4 border-bottom pb-1">Billing Details</h1>
-			<form id="myform" action="{% url 'checkout'%}" method="POST">
+			<form id="myform1" action="{% url 'checkout'%}" method="POST">
 				{% csrf_token %}
 				{% if address %}
 				<div class="form-group">
@@ -88,7 +81,7 @@
 			</table>
 			<p>Cash on delivery</p>
 			<p>Get the product(s) first and pay later.</p>
-			<input type="submit" value="submit" class="btn btn-primary" style="font-size: 1.6rem;" form="myform" />
+			<input type="submit" value="submit" class="btn btn-primary" style="font-size: 1.6rem;" form="myform1" />
 		</div>
 	</div>
 </main>
