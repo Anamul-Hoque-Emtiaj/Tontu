@@ -39,7 +39,6 @@ urlpatterns=[
     path('about-us/',views.about_us, name='about-us'),
     path('accounts/password_change/',views.password_change,name='password_change'),
     path('subscribe/',views.subscribe, name='subscribe'),
-    path('test/',views.test, name='test'),
 ]
 
 if settings.DEBUG:

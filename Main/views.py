@@ -22,13 +22,6 @@ def subscribe(request):
 		nothing = Subscriber.objects.create(email=email)
 	return redirect('home')
 
-
-def test(request):
-	banners=Banner.objects.all().order_by('-id')
-	data=Product.objects.order_by('-id')
-	cats=Category.objects.all().order_by('-id')
-	return render(request,'base_core.html',{'data':data,'banners':banners,'cats':cats})
-
 def error_404(request, exception):
 	return render(request,'error.html',{'msg':'page_not_found','code':404})
     
